@@ -1,0 +1,46 @@
+/*
+ * Design tokens. Naming follows the gallery scheme Papier · Tinte · Signal · Tiefe.
+ * Values are deliberately neutral placeholders: the real palette and type
+ * pairing come out of the Design-Direction round (docs/hero-brief.md).
+ * Replace this file with tokens/tailwind/theme.css from the gallery when ready.
+ */
+@theme {
+  /* Surfaces: this brand lives at night, so Papier is dark and Tiefe is darker. */
+  --color-paper: #0e0d0c;
+  --color-paper-2: #161412;
+  --color-ink: #f4efe6;
+  --color-ink-2: #b9b2a6;
+  --color-signal: #f2c14e;
+  --color-depth: #050505;
+
+  /* Typography: set by next/font in app/layout.tsx; placeholders fall back to system. */
+  --font-display: var(--font-display, ui-serif, Georgia, serif);
+  --font-body: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+  --font-mono: var(--font-mono, ui-monospace, "SF Mono", Menlo, monospace);
+
+  /* Type scale (fluid). */
+  --text-display: clamp(3rem, 8vw, 8rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.02em;
+  --text-h2: clamp(2rem, 4.5vw, 4rem);
+  --text-h2--line-height: 1.02;
+  --text-h2--letter-spacing: -0.015em;
+  --text-lead: clamp(1.125rem, 1.6vw, 1.375rem);
+  --text-lead--line-height: 1.45;
+  --text-mono: 0.6875rem;
+  --text-mono--letter-spacing: 0.14em;
+
+  /* Rhythm. */
+  --spacing-section: clamp(6rem, 12vw, 11rem);
+  --spacing-gutter: clamp(1rem, 4vw, 3rem);
+  --container-content: 72rem;
+  --container-prose: 40rem;
+
+  /* Motion. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --duration-base: 600ms;
+  --duration-slow: 1200ms;
+
+  --radius-pill: 999px;
+}

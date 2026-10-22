@@ -87,30 +87,32 @@ export type BubbleSpec = {
   amber: [number, number];
 };
 
-export const MOBILE_BUBBLE_SCALE = 1.6;
+export const MOBILE_BUBBLE_SCALE = 1.2;
 
 /** Seconds between two bubble starts. */
 export const BUBBLE_STEP = 0.75;
 export const FIRST_BUBBLE = 0.8;
 
 /**
- * Layout per slug, in dramaturgy order. Memories are large (42–56vmin,
- * phones ×1.6 ≈ 67–90 % of the width) and dissolve into the black from the
- * middle outwards, so an image may run past the screen edge: only its label
- * and its amber point must stay visible. On desktop consecutive memories
- * switch the screen half (left/right); on portrait phones every amber point
+ * Layout per slug, in dramaturgy order. Memories are very large (84–110vmin,
+ * phones ×1.2 ≈ 100–130 % of the width) and dissolve into the black from the
+ * middle outwards, so an image runs past the screen edges; its recognizable
+ * core sits near the middle, alternately a little left and a little right.
+ * The label sits inside the lower part of the visible image (MemoryBubble),
+ * the amber point stays on screen, and on portrait phones every amber point
  * stays above 62svh, inside the canvas that takes the points over as party
- * lights. Checked at 1280×720, 1440×900, 1920×1080, 390×844 and 375×667.
+ * lights. fireworks is already the halo size (70vmin), so it only drifts to
+ * the center. Checked at 1280×720, 1440×900, 1920×1080, 390×844 and 375×667.
  */
 const layout: Record<OccasionSlug, Omit<BubbleSpec, "id" | "label" | "start">> = {
-  towers: { x: 27, y: 36, mx: 40, my: 27, size: 54, rise: 5, amber: [58, 52] },
-  yacht: { x: 70, y: 56, mx: 60, my: 44, size: 50, rise: 5, amber: [68, 67] },
-  storm: { x: 30, y: 62, mx: 38, my: 25, size: 46, rise: 4, amber: [86, 71] },
-  water: { x: 69, y: 38, mx: 58, my: 42, size: 56, rise: 6, amber: [80, 73] },
-  terrace: { x: 26, y: 48, mx: 38, my: 26, size: 42, rise: 4, amber: [52, 63] },
-  rooftop: { x: 73, y: 46, mx: 60, my: 44, size: 52, rise: 5, amber: [48, 48] },
+  towers: { x: 38, y: 46, mx: 46, my: 30, size: 104, rise: 4, amber: [58, 52] },
+  yacht: { x: 62, y: 50, mx: 54, my: 34, size: 96, rise: 4, amber: [68, 67] },
+  storm: { x: 37, y: 50, mx: 44, my: 30, size: 90, rise: 3, amber: [86, 71] },
+  water: { x: 63, y: 46, mx: 56, my: 33, size: 110, rise: 4, amber: [80, 73] },
+  terrace: { x: 36, y: 50, mx: 44, my: 32, size: 84, rise: 3, amber: [52, 63] },
+  rooftop: { x: 64, y: 48, mx: 56, my: 33, size: 100, rise: 4, amber: [48, 48] },
   // Cropped around the burst by scripts/optimize-intro.mjs: amber sits in the middle.
-  fireworks: { x: 44, y: 58, mx: 48, my: 32, size: 48, rise: 3, amber: [50, 50] },
+  fireworks: { x: 50, y: 52, mx: 50, my: 33, size: 70, rise: 2, amber: [50, 50] },
 };
 
 /** Seven memories; the last one (fireworks) becomes the light halo. */

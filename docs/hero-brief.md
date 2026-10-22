@@ -43,9 +43,9 @@ Originale liegen in `assets-src/intro/` (nicht ausgeliefert). `npm run assets:in
 
 **Blase**
 - **Form:** runde Maske (Inkreis). Das Foto skaliert darin von 1,15 auf 1,0.
-- **Keine Blase:** kein Rand, kein Glanz, kein Ring. Das Foto ist nur in der Mitte voll sichtbar und geht über die äußeren rund 60 % des Radius fließend ins Schwarz über.
-- **Bewegung:** blendet in 0,3 s weich ein (leichter Zoom 0,92 → 1,0), steigt ein Stück, das Foto zoomt von 1,15 auf 1,0, dann löst es sich in 0,3 s wieder auf.
-- **Größe:** 42–56vmin (bei 1440 × 900 rund 380–500 px), auf Mobil ×1,6 (67–90 % der Breite). Das Bild darf über den Bildschirmrand ragen, Label und Amber-Punkt bleiben sichtbar.
+- **Keine Blase:** kein Rand, kein Glanz, kein Ring. Die innere Hälfte des Radius ist voll sichtbar, damit das Foto erkennbar bleibt; die äußere Hälfte geht fließend ins Schwarz über.
+- **Bewegung:** blendet in 0,3 s weich ein (leichter Zoom 0,92 → 1,0), steigt ein Stück, das Foto zoomt von 1,08 auf 1,0, dann löst es sich in 0,3 s wieder auf. Das Label steht im unteren Teil des Bildes.
+- **Größe:** 84–110vmin (bei 1440 × 900 rund 760–990 px), auf Mobil ×1,2 (100–130 % der Breite). Die Bilder erscheinen abwechselnd etwas links und etwas rechts der Mitte und ragen über den Bildschirmrand; Label und Amber-Punkt bleiben sichtbar. Das Feuerwerk hat 70vmin, die Größe des Lichthofs.
 - **Verteilung:** über die ganze Fläche, nie zwei direkt hintereinander auf derselben Bildhälfte.
 - **Tempo:** ruhiger als der erste Stand (0,6 s Abstand, 120-ms-Schnitte): jetzt 0,75 s Abstand, 1,0 s Sichtdauer, 0,3 s Ein- und Ausblenden.
 

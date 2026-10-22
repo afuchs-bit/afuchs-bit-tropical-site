@@ -20,11 +20,12 @@ import { cancelAll, easing, track } from "./waapi";
 /** No photo: a faint graphite glow, no edge. */
 const GLASS_FILL = "color-mix(in oklab, var(--halo-deep) 70%, transparent)";
 /**
- * Flowing transition into the black: the photo is fully visible only in the
- * middle and fades out over the outer ≈ 60 % of the radius. There is no rim.
+ * Flowing transition into the black: the inner half of the radius stays
+ * fully visible so the photo is recognizable, the outer half fades out.
+ * There is no rim.
  */
 const DISSOLVE =
-  "radial-gradient(circle closest-side, #000 38%, rgb(0 0 0 / 0.82) 52%, rgb(0 0 0 / 0.45) 70%, rgb(0 0 0 / 0.14) 86%, transparent 100%)";
+  "radial-gradient(circle closest-side, #000 50%, rgb(0 0 0 / 0.85) 62%, rgb(0 0 0 / 0.5) 76%, rgb(0 0 0 / 0.15) 89%, transparent 100%)";
 
 
 /**
@@ -135,6 +136,8 @@ export const LABEL_CLASS =
   "whitespace-pre font-mono text-meta leading-4 uppercase tabular-nums text-paper";
 /** Gap between bubble and label (px). */
 export const LABEL_GAP = 12;
+/** Memory labels sit inside the lower visible part of the image (% of its box height). */
+const LABEL_TOP = "83%";
 
 
 /** The moment a memory starts to fade out: fully risen, photo at scale 1.0. */
@@ -144,7 +147,7 @@ export function memoryPopAt(spec: BubbleSpec): number {
 
 /**
  * Memories 1–6: fades in out of the black over T.bubbleIn (0.92 → 1.0), rises
- * by spec.rise while the photo settles from 1.15 to 1.0, and dissolves back
+ * by spec.rise while the photo settles from 1.08 to 1.0, and dissolves back
  * over T.bubbleOut (a touch larger, gone). Its amber light stays (AmberTrail).
  */
 export function MemoryBubble({
@@ -192,7 +195,7 @@ export function MemoryBubble({
         image.current,
         t0,
         [
-          { t: start, transform: "scale(1.15)", easing: easing.outQuart },
+          { t: start, transform: "scale(1.08)", easing: easing.outQuart },
           { t: popAt, transform: "scale(1)" },
         ],
         { fill: "both" },
@@ -214,8 +217,8 @@ export function MemoryBubble({
       </div>
       <span
         ref={label}
-        className={`absolute left-1/2 top-full opacity-0 ${LABEL_CLASS}`}
-        style={{ marginTop: LABEL_GAP }}
+        className={`absolute left-1/2 opacity-0 ${LABEL_CLASS}`}
+        style={{ top: LABEL_TOP }}
       >
         {spec.label}
       </span>

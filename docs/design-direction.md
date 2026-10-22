@@ -88,7 +88,7 @@ Beide Lichthöfe bestehen dieselben Kontraste (Papier auf Kern 4,3 bzw. 4,2).
 | Gate | Die sieben AVIFs (zusammen 172 KB) laden schon jetzt, `img.decode()` vor dem Start. |
 | 0,0–0,4 | „Ja“ schaltet den Ton frei. Danach Schwärze in Tinte mit 7 % CSS-Korn über allem. |
 | 0,8–5,9 | Sieben Erinnerungsbilder, Start alle 0,75 s, je 1,0 s sichtbar: towers (links oben) → yacht (rechts unten) → storm (links unten) → water (rechts oben) → terrace (links Mitte) → rooftop (rechts Mitte) → fireworks (Mitte unten). Die Bilder wechseln immer die Bildhälfte. |
-| je Bild | Keine klare Blase: kein Rand, kein Glanz, kein Ring. Das Foto ist nur in der Mitte voll sichtbar und geht über die äußeren ≈ 60 % des Radius fließend ins Schwarz über. Es blendet in 0,3 s ein (Zoom 0,92 → 1,0), steigt 3–6vmin, das Foto zoomt von 1,15 auf 1,0, dann löst es sich in 0,3 s auf. Größe 42–56vmin, auf Mobil ×1,6. |
+| je Bild | Keine klare Blase: kein Rand, kein Glanz, kein Ring. Die innere Hälfte des Radius ist voll sichtbar, die äußere geht fließend ins Schwarz über. Es blendet in 0,3 s ein (Zoom 0,92 → 1,0), steigt 2–4vmin, das Foto zoomt von 1,08 auf 1,0, dann löst es sich in 0,3 s auf. Größe 84–110vmin, abwechselnd etwas links und rechts der Mitte, auf Mobil ×1,2; das Label steht im unteren Teil des Bildes. |
 | 5,9–6,25 | `fireworks` wandert in die Mitte und wächst auf 70vmin. Das Amber-Zentrum liegt exakt in der Mitte, weil das Bild beim Kodieren um das Feuerwerk beschnitten wird. Das Label rollt von „07 · 00:00“ auf „HEUTE NACHT“. |
 | 6,2–6,45 | Das Foto wird zur flachen Lichtscheibe. Sie platzt, und der Kreis bleibt als Lichthof (Shader mit Mitte und Radius der Lichtscheibe). |
 | 6,55 | Die Dose steigt aus dem Licht, Bloom auf der Oberkante, tiefer Bass-Schlag. |
@@ -130,7 +130,7 @@ Beide Lichthöfe bestehen dieselben Kontraste (Papier auf Kern 4,3 bzw. 4,2).
   - **Was zu sehen ist:** Im Hintergrund halten Gäste Weingläser, ein Glas steht auf dem Tisch.
   - **Fahrzeugbezug:** Am Steuer ist niemand zu sehen, und die Frau trinkt nicht. Trotzdem stehen Boot und Alkohol im selben Bild.
   - **Statusbezug:** Die Yacht ist das deutlichste Luxus-Signal der Serie.
-  - **Was tun:** vom Werberechtler prüfen lassen. Seit die Bilder deutlich größer sind (bis 56vmin) und 1,0 s stehen, sind die Gläser eher zu erkennen.
+  - **Was tun:** vom Werberechtler prüfen lassen. Seit die Bilder fast bildschirmfüllend sind (bis 110vmin) und 1,0 s stehen, sind die Gläser eher zu erkennen.
 - **rooftop:** Am linken Rand halten Gäste Flasche und Glas. Feiern mit Getränken ist zulässig, solange niemand betrunken wirkt, und das ist hier erfüllt. Die pinken und cyanfarbenen LED-Streifen sind beim Kodieren gedämpft.
 - **storm:** Am Fenster stehen Parfumflakons, eine Frau trägt Fußkettchen und Armband. Das ist Schmuck im Sinne eurer Ausschlussliste, in Blasengröße aber nicht erkennbar. Hinweis, kein Blocker.
 - **water:** Die Aufnahme entsteht vom Boot aus, ohne Getränk. Unkritisch.

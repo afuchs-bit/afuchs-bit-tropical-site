@@ -30,21 +30,21 @@ Originale liegen in `assets-src/intro/` (nicht ausgeliefert). `npm run assets:in
 - **Labels:** eine einzige Nacht, die auf Mitternacht zuläuft, ohne Wochentage. Label 07 rollt nach dem Platzen auf „HEUTE NACHT“.
 - **Amber-Positionen:** gemessen am Schwerpunkt der Amber-Pixel. Grundlage für die eigene Idee der Direction.
 
-## Intro-Drehbuch (etwa 8 s)
+## Intro-Drehbuch (etwa 12 s)
 
 | Zeit | Was passiert |
 |---|---|
 | 0,0 s | Age Gate. „Ja“ startet das Intro; der Klick schaltet auch Audio frei. |
 | +0,4 s | Schwärze mit feinem Korn (CSS-Ebene, etwa 7 %, über allem). |
-| +0,8–5,9 s | POV-Blinzeln durch sieben Fotos, alle 0,75 s ein Lidschlag. Siehe „Blinzeln“ unten. |
-| +5,9 s | `fireworks` wandert in die Mitte und wächst auf 70vmin; das Amber-Zentrum liegt exakt in der Bildmitte. Es wird zur flachen Lichtscheibe, dann zum Lichthof: ein Shader, dessen Uniforms Mittelpunkt und Radius der Blase übernehmen. |
-| +6,55 s | Die Dose erscheint aus dem Licht, Bloom auf der Oberkante. Optional ein tiefer Bass-Schlag. |
-| +7,35 s | Headline-Reveal, danach Header, Infotext, CTAs. Ab 8,0 s Ruhezustand. |
+| +0,8–9,8 s | POV-Blinzeln durch sieben Fotos, alle 1,4 s ein Lidschlag. Siehe „Blinzeln“ unten. |
+| +9,8 s | `fireworks` wandert in die Mitte und wächst auf 70vmin; das Amber-Zentrum liegt exakt in der Bildmitte. Es wird zur flachen Lichtscheibe, dann zum Lichthof: ein Shader, dessen Uniforms Mittelpunkt und Radius der Blase übernehmen. |
+| +10,45 s | Die Dose erscheint aus dem Licht, Bloom auf der Oberkante. Optional ein tiefer Bass-Schlag. |
+| +11,25 s | Headline-Reveal, danach Header, Infotext, CTAs. Ab 12,0 s Ruhezustand. |
 
 **Blase**
 - **Form:** runde Maske (Inkreis). Das Foto skaliert darin von 1,15 auf 1,0.
 - **Ich-Perspektive:** Jedes Foto füllt den Bildschirm, mit leichter POV-Vignette. Zwischen zwei Fotos blinzelt man: Die Lider (Tinte, weich gebogene, unscharfe Kante) schließen sich, hinter ihnen wechselt das Foto, sie öffnen sich wieder.
-- **Blinzeln:** Lider auf in 0,18 s, offen bis 0,6 s nach dem Start, zu in 0,12 s. Beim Öffnen zoomt das Foto leicht von 1,04 auf 1,0. Vor dem ersten Foto sind die Lider geschlossen, nach dem Feuerwerk bleiben sie offen.
+- **Blinzeln:** Lider auf in 0,22 s, offen bis 1,2 s nach dem Start, zu in 0,15 s. Beim Öffnen zoomt das Foto leicht von 1,04 auf 1,0. Vor dem ersten Foto sind die Lider geschlossen, nach dem Feuerwerk bleiben sie offen.
 - **Nachbild:** Kurz bevor sich die Lider schließen, leuchtet das Amber-Licht des Fotos auf und bleibt als Nachbild im Dunkeln stehen (an der gemessenen Licht-Position, auf dem Handy in den 3D-Bereich geklemmt).
 - **Label:** unten mittig im Bild, solange es offen ist.
 
@@ -73,7 +73,7 @@ Originale liegen in `assets-src/intro/` (nicht ausgeliefert). `npm run assets:in
 
 - Hero-Shell bleibt Server Component.
 - Intro (DOM/CSS mit Framer Motion und nativen Animationen, Blasen ohne WebGL) und Szene (R3F über `next/dynamic({ ssr: false })`) sind Client Components.
-- Der Canvas lädt parallel zum Intro und ist bei +5,9 s bereit. Ist er das nicht, hält der Lichthof als CSS-Fallback, bis die Dose da ist. Kein Loch.
+- Der Canvas lädt parallel zum Intro und ist bei +9,8 s bereit. Ist er das nicht, hält der Lichthof als CSS-Fallback, bis die Dose da ist. Kein Loch.
 - Kein Layout Shift. LCP ist das Age Gate bzw. die Headline, kein Bild.
 
 ## Rechtliches

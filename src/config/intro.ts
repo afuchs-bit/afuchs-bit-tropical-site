@@ -13,18 +13,18 @@ export const T = {
   gateOut: [0, 0.3],
   /** Black with grain is fully there. */
   grain: 0.4,
-  /** Visible life of one memory bubble (cut in, rise, pop). */
-  bubbleLife: 0.7,
-  /** A bubble cuts in from a point (outExpo) … */
-  bubbleIn: 0.12,
-  /** … and pops just as fast: it should read as a cut, not a fade. */
-  bubbleOut: 0.12,
-  /** The last bubble (fireworks) drifts to the halo center and grows to the halo size. */
-  finalToCenter: [5.0, 5.35],
+  /** Visible life of one memory (fade in, rise, fade out). */
+  bubbleLife: 1.0,
+  /** A memory fades in out of the black … */
+  bubbleIn: 0.3,
+  /** … and dissolves back into it. */
+  bubbleOut: 0.3,
+  /** The last memory (fireworks) drifts to the halo center and grows to the halo size. */
+  finalToCenter: [5.9, 6.25],
   /** Its photo turns into a flat light disc. */
-  finalDisc: [5.3, 5.5],
-  /** Rim flash of the light disc starts; it pops at pop + rimFlash. */
-  pop: 5.5,
+  finalDisc: [6.2, 6.45],
+  /** Light flash of the disc starts; it pops at pop + rimFlash. */
+  pop: 6.45,
   /** Length of the rim flash (80 ms). Droplets and amber points become party lights at pop + rimFlash. */
   rimFlash: 0.08,
   /** The DOM light may hand over to the WebGL halo from pop + handoffAfter … */
@@ -32,25 +32,25 @@ export const T = {
   /** … in a cross-fade of this length (or to the CSS fallback at posterDeadline). */
   handoffFade: 0.35,
   /** Light cone from above: 0 → 1 in 400 ms, then settles at 35 %. */
-  lightCone: [5.5, 5.9],
+  lightCone: [6.45, 6.85],
   /** Background runs from Tinte into the flavor gradient. */
-  backdrop: [5.5, 6.0],
+  backdrop: [6.45, 6.95],
   /** WebGL render loop starts (frameloop "never" before); ready before the pop. */
-  sceneStart: 5.0,
-  /** Can rises out of the light; rim bloom peaks at 5.8. */
-  can: [5.6, 6.5],
-  rimPeak: 5.8,
-  bass: 5.6,
+  sceneStart: 5.9,
+  /** Can rises out of the light; rim bloom peaks at 6.75. */
+  can: [6.55, 7.45],
+  rimPeak: 6.75,
+  bass: 6.55,
   /** Floating elements fly from the light to their rest positions. */
-  elements: [5.65, 6.65],
+  elements: [6.6, 7.6],
   /** If the scene is not ready by then, the CSS halo holds until the can is there. */
-  posterDeadline: 6.2,
-  headline: [6.4, 6.45],
-  header: 6.55,
-  copy: 6.6,
-  ctas: 6.7,
-  legal: 6.8,
-  rest: 7.0,
+  posterDeadline: 7.15,
+  headline: [7.35, 7.4],
+  header: 7.5,
+  copy: 7.55,
+  ctas: 7.65,
+  legal: 7.75,
+  rest: 8.0,
 } as const;
 
 /** Return visit (intro already seen): light on, can out of the light, wipe. */
@@ -87,30 +87,30 @@ export type BubbleSpec = {
   amber: [number, number];
 };
 
-export const MOBILE_BUBBLE_SCALE = 1.7;
+export const MOBILE_BUBBLE_SCALE = 1.6;
 
 /** Seconds between two bubble starts. */
-export const BUBBLE_STEP = 0.6;
+export const BUBBLE_STEP = 0.75;
 export const FIRST_BUBBLE = 0.8;
 
 /**
- * Layout per slug, in dramaturgy order. Bubbles are large (34–46vmin,
- * phones ×1.7 ≈ 58–78 % of the width) so each memory fills the view for a
- * moment. On desktop consecutive bubbles switch the screen half (left/right);
- * on portrait phones they switch between top and lower middle, and every
- * amber point stays above 62svh, inside the canvas that takes the points over
- * as party lights. Checked at 1280×720, 1440×900, 1920×1080, 390×844 and
- * 375×667: every bubble and its label stays on screen.
+ * Layout per slug, in dramaturgy order. Memories are large (42–56vmin,
+ * phones ×1.6 ≈ 67–90 % of the width) and dissolve into the black from the
+ * middle outwards, so an image may run past the screen edge: only its label
+ * and its amber point must stay visible. On desktop consecutive memories
+ * switch the screen half (left/right); on portrait phones every amber point
+ * stays above 62svh, inside the canvas that takes the points over as party
+ * lights. Checked at 1280×720, 1440×900, 1920×1080, 390×844 and 375×667.
  */
 const layout: Record<OccasionSlug, Omit<BubbleSpec, "id" | "label" | "start">> = {
-  towers: { x: 28, y: 32, mx: 40, my: 27, size: 44, rise: 5, amber: [58, 52] },
-  yacht: { x: 70, y: 62, mx: 60, my: 46, size: 40, rise: 5, amber: [68, 67] },
-  storm: { x: 30, y: 66, mx: 38, my: 23, size: 36, rise: 4, amber: [86, 71] },
-  water: { x: 68, y: 34, mx: 56, my: 44, size: 46, rise: 6, amber: [80, 73] },
-  terrace: { x: 24, y: 50, mx: 36, my: 24, size: 34, rise: 4, amber: [52, 63] },
-  rooftop: { x: 74, y: 46, mx: 62, my: 45, size: 42, rise: 5, amber: [48, 48] },
+  towers: { x: 27, y: 36, mx: 40, my: 27, size: 54, rise: 5, amber: [58, 52] },
+  yacht: { x: 70, y: 56, mx: 60, my: 44, size: 50, rise: 5, amber: [68, 67] },
+  storm: { x: 30, y: 62, mx: 38, my: 25, size: 46, rise: 4, amber: [86, 71] },
+  water: { x: 69, y: 38, mx: 58, my: 42, size: 56, rise: 6, amber: [80, 73] },
+  terrace: { x: 26, y: 48, mx: 38, my: 26, size: 42, rise: 4, amber: [52, 63] },
+  rooftop: { x: 73, y: 46, mx: 60, my: 44, size: 52, rise: 5, amber: [48, 48] },
   // Cropped around the burst by scripts/optimize-intro.mjs: amber sits in the middle.
-  fireworks: { x: 44, y: 62, mx: 46, my: 30, size: 38, rise: 3, amber: [50, 50] },
+  fireworks: { x: 44, y: 58, mx: 48, my: 32, size: 48, rise: 3, amber: [50, 50] },
 };
 
 /** Seven memories; the last one (fireworks) becomes the light halo. */

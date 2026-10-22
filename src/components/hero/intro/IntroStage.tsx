@@ -141,8 +141,8 @@ function Stage({ t0, leaving, onLeft }: { t0: number; leaving: boolean; onLeft: 
       </div>
       <div ref={bubbleLayer} className={`${LAYER} z-[45]`}>
         <div aria-hidden="true" className="absolute inset-0">
-          {memorySpecs.map((spec, i) => (
-            <MemoryBubble key={spec.id} spec={spec} index={i} t0={t0} layout={layout} />
+          {memorySpecs.map((spec) => (
+            <MemoryBubble key={spec.id} spec={spec} t0={t0} layout={layout} />
           ))}
           {finalSpec && <FinalBubble spec={finalSpec} t0={t0} layout={layout} />}
           <AmberTrail t0={t0} layout={layout} />

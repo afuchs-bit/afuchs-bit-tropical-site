@@ -81,31 +81,31 @@ Beide Lichthöfe bestehen dieselben Kontraste (Papier auf Kern 4,3 bzw. 4,2).
   - Unten links steht „07 · HEUTE NACHT“ statt der Uhrzeit. Das ist das Label, auf das die siebte Blase rollt.
 - **Mobil wie gebaut:** Szene bis 62svh, darunter die Ruhezone auf Tiefe.
 
-## 5. Intro (max. 7 s)
+## 5. Intro (etwa 8 s)
 
 | Zeit | Was passiert |
 |---|---|
 | Gate | Die sieben AVIFs (zusammen 172 KB) laden schon jetzt, `img.decode()` vor dem Start. |
 | 0,0–0,4 | „Ja“ schaltet den Ton frei. Danach Schwärze in Tinte mit 7 % CSS-Korn über allem. |
-| 0,8–4,4 | Sieben Blasen, Start alle 0,6 s, je 0,7 s sichtbar: towers (links oben) → yacht (rechts unten) → storm (links unten) → water (rechts oben) → terrace (links Mitte) → rooftop (rechts Mitte) → fireworks (Mitte unten). Die Blasen wechseln immer die Bildhälfte. |
-| je Blase | Sie erscheint in 120 ms (outExpo) aus einem Punkt und wirkt wie ein Schnitt, keine Überblendung. Das Foto skaliert von 1,15 auf 1,0, oben links sitzt eine Glanzsichel, die Blase steigt 3–6vmin und platzt in 120 ms. Größe 34–46vmin, auf Mobil ×1,7. Der Rand läuft weich aus (Maske über die äußeren ≈ 14 % des Radius, unscharfer Lichtsaum statt Linie). |
-| 5,0–5,35 | `fireworks` wandert in die Mitte und wächst auf 70vmin. Das Amber-Zentrum liegt exakt in der Mitte, weil das Bild beim Kodieren um das Feuerwerk beschnitten wird. Das Label rollt von „07 · 00:00“ auf „HEUTE NACHT“. |
-| 5,35–5,55 | Das Foto wird zur flachen Lichtscheibe. Sie platzt, und der Kreis bleibt als Lichthof (Shader mit Mitte und Radius der Blase). |
-| 5,6 | Die Dose steigt aus dem Licht, Bloom auf der Oberkante, tiefer Bass-Schlag. |
-| 6,4–7,0 | Licht-Wipe für „Heute“ (von links) und „Nacht.“ (von rechts), danach Header, Karten, Infotext und CTAs. |
+| 0,8–5,9 | Sieben Erinnerungsbilder, Start alle 0,75 s, je 1,0 s sichtbar: towers (links oben) → yacht (rechts unten) → storm (links unten) → water (rechts oben) → terrace (links Mitte) → rooftop (rechts Mitte) → fireworks (Mitte unten). Die Bilder wechseln immer die Bildhälfte. |
+| je Bild | Keine klare Blase: kein Rand, kein Glanz, kein Ring. Das Foto ist nur in der Mitte voll sichtbar und geht über die äußeren ≈ 60 % des Radius fließend ins Schwarz über. Es blendet in 0,3 s ein (Zoom 0,92 → 1,0), steigt 3–6vmin, das Foto zoomt von 1,15 auf 1,0, dann löst es sich in 0,3 s auf. Größe 42–56vmin, auf Mobil ×1,6. |
+| 5,9–6,25 | `fireworks` wandert in die Mitte und wächst auf 70vmin. Das Amber-Zentrum liegt exakt in der Mitte, weil das Bild beim Kodieren um das Feuerwerk beschnitten wird. Das Label rollt von „07 · 00:00“ auf „HEUTE NACHT“. |
+| 6,2–6,45 | Das Foto wird zur flachen Lichtscheibe. Sie platzt, und der Kreis bleibt als Lichthof (Shader mit Mitte und Radius der Lichtscheibe). |
+| 6,55 | Die Dose steigt aus dem Licht, Bloom auf der Oberkante, tiefer Bass-Schlag. |
+| 7,35–8,0 | Licht-Wipe für „Heute“ (von links) und „Nacht.“ (von rechts), danach Header, Karten, Infotext und CTAs. |
 
 ## 6. Eigene Idee: „Was bleibt, ist das Licht“
 
 - **Was beim Platzen bleibt:** Jede Blase wird so platziert, dass ihr Amber-Licht an einer festen Stelle im Raum sitzt. Die Positionen im Bild sind gemessen: towers 58/52 %, yacht 68/67 %, storm 86/71 % usw. Platzt die Blase, verschwindet das Foto, aber **ihr Amber-Licht bleibt** als 4px-Lichtpunkt in der Schwärze hängen.
-- **Wie sich die Lichter sammeln:** Nach sechs Blasen hängen sechs warme Punkte im Dunkeln, eine Spur durch die Nacht. Bei 5,0 s zieht das Feuerwerk in die Mitte, und die sechs Punkte werden mitgezogen. Sie werden zu den ersten Partylichtern um die Dose.
+- **Wie sich die Lichter sammeln:** Nach sechs Blasen hängen sechs warme Punkte im Dunkeln, eine Spur durch die Nacht. Bei 5,9 s zieht das Feuerwerk in die Mitte, und die sechs Punkte werden mitgezogen. Sie werden zu den ersten Partylichtern um die Dose.
 - **Warum:** Der rote Faden aus dem Brief wird damit sichtbar, statt nur behauptet. Jede Erinnerung hinterlässt ihr Licht, und alle Lichter landen bei der Dose.
 - **Aufwand:** Die Partylichter-Übergabe aus der letzten Blase gibt es schon. Neu sind nur die gemessenen Amber-Koordinaten je Blase und sechs zusätzliche Startpunkte.
 
 ## 7. Motion-Haltung
 
-- **Zweigeteilt:** Das Intro ist hart wie ein Reel (120-ms-Schnitte, keine Fades). Der Ruhezustand ist ruhig wie die Nacht danach.
+- **Ruhig fließend:** Das Intro reiht Erinnerungsfetzen, die aus dem Schwarz auftauchen und wieder darin verschwinden (0,3-s-Überblendungen). Der Ruhezustand ist ruhig wie die Nacht danach.
 - **Kurven:** outExpo und inOutQuart aus `motion.ts`, kein Bounce.
-- **Drei Signatur-Effekte:** Blasen-Schnitt mit bleibendem Licht, Licht-Wipe, ausweichende Welt.
+- **Drei Signatur-Effekte:** Erinnerungen, die im Schwarz verschwinden und ihr Licht zurücklassen, Licht-Wipe, ausweichende Welt.
 - **Reduced motion:** kein Intro, der Hero steht sofort.
 
 **Genutzte Prinzipien:**
@@ -130,7 +130,7 @@ Beide Lichthöfe bestehen dieselben Kontraste (Papier auf Kern 4,3 bzw. 4,2).
   - **Was zu sehen ist:** Im Hintergrund halten Gäste Weingläser, ein Glas steht auf dem Tisch.
   - **Fahrzeugbezug:** Am Steuer ist niemand zu sehen, und die Frau trinkt nicht. Trotzdem stehen Boot und Alkohol im selben Bild.
   - **Statusbezug:** Die Yacht ist das deutlichste Luxus-Signal der Serie.
-  - **Was tun:** vom Werberechtler prüfen lassen. Seit die Blasen doppelt so groß sind (bis 46vmin), sind die Gläser in den 0,7 s eher zu erkennen.
+  - **Was tun:** vom Werberechtler prüfen lassen. Seit die Bilder deutlich größer sind (bis 56vmin) und 1,0 s stehen, sind die Gläser eher zu erkennen.
 - **rooftop:** Am linken Rand halten Gäste Flasche und Glas. Feiern mit Getränken ist zulässig, solange niemand betrunken wirkt, und das ist hier erfüllt. Die pinken und cyanfarbenen LED-Streifen sind beim Kodieren gedämpft.
 - **storm:** Am Fenster stehen Parfumflakons, eine Frau trägt Fußkettchen und Armband. Das ist Schmuck im Sinne eurer Ausschlussliste, in Blasengröße aber nicht erkennbar. Hinweis, kein Blocker.
 - **water:** Die Aufnahme entsteht vom Boot aus, ohne Getränk. Unkritisch.

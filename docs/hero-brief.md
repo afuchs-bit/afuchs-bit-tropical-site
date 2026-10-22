@@ -9,7 +9,7 @@ Eine Sommernacht in einer namenlosen Großstadt, mit dem Handy mitgefilmt:
 - **Licht:** fast schwarz, kühles Graphit und Stahlblau, harte einzelne Lichtquellen.
 - **Kamera:** Handkamera-Unschärfe, Ich-Perspektive.
 - **Amber:** In jedem Bild gibt es genau ein Licht in Mango-Amber (Farbton 24–35°, gemessen im Mittel 31°). Dieses Amber ist der rote Faden, der am Ende zur Dose führt.
-- **Tempo:** wie in Lifestyle-Reels, harte Schnitte unter einer Sekunde, Erinnerungsfetzen statt Diashow.
+- **Tempo:** Erinnerungsfetzen statt Diashow. Jedes Bild steht etwa eine Sekunde und löst sich weich wieder ins Schwarz auf.
 - **Bewusst nicht im Bild:** Geld, Uhren, Schmuck, Autos, Jets. Der Werberat verbietet, Alkohol mit sozialem Erfolg zu verknüpfen. Das gilt auch für die Copy.
 
 ## Die sieben Bilder
@@ -30,24 +30,24 @@ Originale liegen in `assets-src/intro/` (nicht ausgeliefert). `npm run assets:in
 - **Labels:** eine einzige Nacht, die auf Mitternacht zuläuft, ohne Wochentage. Label 07 rollt nach dem Platzen auf „HEUTE NACHT“.
 - **Amber-Positionen:** gemessen am Schwerpunkt der Amber-Pixel. Grundlage für die eigene Idee der Direction.
 
-## Intro-Drehbuch (max. 7 s)
+## Intro-Drehbuch (etwa 8 s)
 
 | Zeit | Was passiert |
 |---|---|
 | 0,0 s | Age Gate. „Ja“ startet das Intro; der Klick schaltet auch Audio frei. |
 | +0,4 s | Schwärze mit feinem Korn (CSS-Ebene, etwa 7 %, über allem). |
-| +0,8–5,0 s | Sieben Blasen im Abstand von etwa 0,6 s, je etwa 0,7 s sichtbar, leicht überlappend. Siehe „Blase“ unten. |
-| +5,0 s | `fireworks` wandert in die Mitte und wächst auf 70vmin; das Amber-Zentrum liegt exakt in der Bildmitte. Es wird zur flachen Lichtscheibe, dann zum Lichthof: ein Shader, dessen Uniforms Mittelpunkt und Radius der Blase übernehmen. |
-| +5,6 s | Die Dose erscheint aus dem Licht, Bloom auf der Oberkante. Optional ein tiefer Bass-Schlag. |
-| +6,4 s | Headline-Reveal, danach Header, Infotext, CTAs. |
+| +0,8–5,9 s | Sieben Erinnerungsbilder im Abstand von 0,75 s, je etwa 1,0 s sichtbar, überlappend. Siehe „Erinnerungsbild“ unten. |
+| +5,9 s | `fireworks` wandert in die Mitte und wächst auf 70vmin; das Amber-Zentrum liegt exakt in der Bildmitte. Es wird zur flachen Lichtscheibe, dann zum Lichthof: ein Shader, dessen Uniforms Mittelpunkt und Radius der Blase übernehmen. |
+| +6,55 s | Die Dose erscheint aus dem Licht, Bloom auf der Oberkante. Optional ein tiefer Bass-Schlag. |
+| +7,35 s | Headline-Reveal, danach Header, Infotext, CTAs. Ab 8,0 s Ruhezustand. |
 
 **Blase**
 - **Form:** runde Maske (Inkreis). Das Foto skaliert darin von 1,15 auf 1,0.
-- **Bewegung:** wächst aus einem Punkt, leichte Glanzsichel oben links, steigt ein Stück und platzt.
-- **Rand:** weich und etwas schwammig. Das Foto läuft am Rand in die Schwärze aus, statt einer Linie gibt es einen unscharfen Lichtsaum; auch der Ring beim Platzen ist weich.
-- **Größe:** 34–46vmin (bei 1440 × 900 rund 300–410 px), auf Mobil ×1,7 (58–78 % der Breite). Jede Erinnerung füllt kurz den Blick.
+- **Keine Blase:** kein Rand, kein Glanz, kein Ring. Das Foto ist nur in der Mitte voll sichtbar und geht über die äußeren rund 60 % des Radius fließend ins Schwarz über.
+- **Bewegung:** blendet in 0,3 s weich ein (leichter Zoom 0,92 → 1,0), steigt ein Stück, das Foto zoomt von 1,15 auf 1,0, dann löst es sich in 0,3 s wieder auf.
+- **Größe:** 42–56vmin (bei 1440 × 900 rund 380–500 px), auf Mobil ×1,6 (67–90 % der Breite). Das Bild darf über den Bildschirmrand ragen, Label und Amber-Punkt bleiben sichtbar.
 - **Verteilung:** über die ganze Fläche, nie zwei direkt hintereinander auf derselben Bildhälfte.
-- **Tempo:** härter als im alten Brief. Erscheinen in etwa 120 ms mit ease-out-expo, Platzen ebenso schnell. Es soll wie ein Schnitt wirken, nicht wie eine Überblendung.
+- **Tempo:** ruhiger als der erste Stand (0,6 s Abstand, 120-ms-Schnitte): jetzt 0,75 s Abstand, 1,0 s Sichtdauer, 0,3 s Ein- und Ausblenden.
 
 **Immer:**
 - „Intro überspringen“ ist sichtbar.
@@ -74,7 +74,7 @@ Originale liegen in `assets-src/intro/` (nicht ausgeliefert). `npm run assets:in
 
 - Hero-Shell bleibt Server Component.
 - Intro (DOM/CSS mit Framer Motion und nativen Animationen, Blasen ohne WebGL) und Szene (R3F über `next/dynamic({ ssr: false })`) sind Client Components.
-- Der Canvas lädt parallel zum Intro und ist bei +5,0 s bereit. Ist er das nicht, hält der Lichthof als CSS-Fallback, bis die Dose da ist. Kein Loch.
+- Der Canvas lädt parallel zum Intro und ist bei +5,9 s bereit. Ist er das nicht, hält der Lichthof als CSS-Fallback, bis die Dose da ist. Kein Loch.
 - Kein Layout Shift. LCP ist das Age Gate bzw. die Headline, kein Bild.
 
 ## Rechtliches

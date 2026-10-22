@@ -6,8 +6,6 @@
  */
 import { T } from "@/config/intro";
 
-/** Droplets of a memory bubble: as quick as the cut. */
-export const MEMORY_DROPLET_LIFE = 0.24;
 /** Droplets of the final bubble fly out and fade (the scene turns its own into party lights). */
 export const DROPLET_LIFE = 0.36;
 /** Overlay fade on skip and at the end of the intro. */

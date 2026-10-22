@@ -124,11 +124,15 @@ function materialsFor(kind: ElementKind, assets: SceneAssets): Material | Materi
         clearcoat: 0.35,
         clearcoatRoughness: 0.35,
       });
+      // The cut face is flat, so its normal is the same everywhere: a glossy
+      // face catches the cool key light on the whole disc at once and turns
+      // into a blank white plate. Low specular, soft clearcoat: wet, not mirror.
       const face = new MeshPhysicalMaterial({
         map: assets.limeFace,
-        roughness: 0.34,
-        clearcoat: 0.7,
-        clearcoatRoughness: 0.18,
+        roughness: 0.6,
+        specularIntensity: 0.3,
+        clearcoat: 0.25,
+        clearcoatRoughness: 0.5,
         // Backlit juice: the face carries a trace of its own color.
         emissive: "#ffffff",
         emissiveMap: assets.limeFace,

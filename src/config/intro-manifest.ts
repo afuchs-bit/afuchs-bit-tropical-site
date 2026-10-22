@@ -5,11 +5,11 @@
 export type IntroImage = { avif: string; jpg: string; size: number };
 
 export const introManifest: Partial<Record<string, IntroImage>> = {
-  towers: { avif: "/intro/towers.avif", jpg: "/intro/towers.jpg", size: 640 },
-  yacht: { avif: "/intro/yacht.avif", jpg: "/intro/yacht.jpg", size: 640 },
-  storm: { avif: "/intro/storm.avif", jpg: "/intro/storm.jpg", size: 640 },
-  water: { avif: "/intro/water.avif", jpg: "/intro/water.jpg", size: 640 },
-  terrace: { avif: "/intro/terrace.avif", jpg: "/intro/terrace.jpg", size: 640 },
-  rooftop: { avif: "/intro/rooftop.avif", jpg: "/intro/rooftop.jpg", size: 640 },
+  towers: { avif: "/intro/towers.avif", jpg: "/intro/towers.jpg", size: 1024 },
+  yacht: { avif: "/intro/yacht.avif", jpg: "/intro/yacht.jpg", size: 1024 },
+  storm: { avif: "/intro/storm.avif", jpg: "/intro/storm.jpg", size: 1024 },
+  water: { avif: "/intro/water.avif", jpg: "/intro/water.jpg", size: 1024 },
+  terrace: { avif: "/intro/terrace.avif", jpg: "/intro/terrace.jpg", size: 1024 },
+  rooftop: { avif: "/intro/rooftop.avif", jpg: "/intro/rooftop.jpg", size: 1024 },
   fireworks: { avif: "/intro/fireworks.avif", jpg: "/intro/fireworks.jpg", size: 1300 },
 };

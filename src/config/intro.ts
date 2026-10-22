@@ -87,27 +87,30 @@ export type BubbleSpec = {
   amber: [number, number];
 };
 
-export const MOBILE_BUBBLE_SCALE = 1.6;
+export const MOBILE_BUBBLE_SCALE = 1.7;
 
 /** Seconds between two bubble starts. */
 export const BUBBLE_STEP = 0.6;
 export const FIRST_BUBBLE = 0.8;
 
 /**
- * Layout per slug, in dramaturgy order. Consecutive bubbles always switch
- * the screen half (left/right), so no two cuts land on the same side. On
- * portrait phones every amber point stays above 62svh, inside the canvas
- * that takes the points over as party lights.
+ * Layout per slug, in dramaturgy order. Bubbles are large (34–46vmin,
+ * phones ×1.7 ≈ 58–78 % of the width) so each memory fills the view for a
+ * moment. On desktop consecutive bubbles switch the screen half (left/right);
+ * on portrait phones they switch between top and lower middle, and every
+ * amber point stays above 62svh, inside the canvas that takes the points over
+ * as party lights. Checked at 1280×720, 1440×900, 1920×1080, 390×844 and
+ * 375×667: every bubble and its label stays on screen.
  */
 const layout: Record<OccasionSlug, Omit<BubbleSpec, "id" | "label" | "start">> = {
-  towers: { x: 24, y: 30, mx: 32, my: 22, size: 22, rise: 5, amber: [58, 52] },
-  yacht: { x: 74, y: 66, mx: 68, my: 56, size: 20, rise: 5, amber: [68, 67] },
-  storm: { x: 28, y: 70, mx: 30, my: 54, size: 18, rise: 4, amber: [86, 71] },
-  water: { x: 70, y: 28, mx: 70, my: 30, size: 24, rise: 6, amber: [80, 73] },
-  terrace: { x: 20, y: 50, mx: 30, my: 46, size: 16, rise: 4, amber: [52, 63] },
-  rooftop: { x: 78, y: 46, mx: 70, my: 50, size: 22, rise: 5, amber: [48, 48] },
+  towers: { x: 28, y: 32, mx: 40, my: 27, size: 44, rise: 5, amber: [58, 52] },
+  yacht: { x: 70, y: 62, mx: 60, my: 46, size: 40, rise: 5, amber: [68, 67] },
+  storm: { x: 30, y: 66, mx: 38, my: 23, size: 36, rise: 4, amber: [86, 71] },
+  water: { x: 68, y: 34, mx: 56, my: 44, size: 46, rise: 6, amber: [80, 73] },
+  terrace: { x: 24, y: 50, mx: 36, my: 24, size: 34, rise: 4, amber: [52, 63] },
+  rooftop: { x: 74, y: 46, mx: 62, my: 45, size: 42, rise: 5, amber: [48, 48] },
   // Cropped around the burst by scripts/optimize-intro.mjs: amber sits in the middle.
-  fireworks: { x: 40, y: 62, mx: 42, my: 66, size: 20, rise: 3, amber: [50, 50] },
+  fireworks: { x: 44, y: 62, mx: 46, my: 30, size: 38, rise: 3, amber: [50, 50] },
 };
 
 /** Seven memories; the last one (fireworks) becomes the light halo. */

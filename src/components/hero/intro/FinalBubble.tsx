@@ -9,7 +9,8 @@ import {
   Specular,
   animateDroplets,
   dropletPaths,
-  rimShadow,
+  softRim,
+  softRing,
   useBubbleImage,
 } from "./MemoryBubble";
 import { bubbleBox } from "../geometry";
@@ -38,8 +39,8 @@ const DISC = lightGradient("closest-side");
  * the LightHalo underneath (same light) stays.
  *
  * The element is sized at the halo diameter and scaled down at the start,
- * so it rasterizes sharp at its largest size. The 1px rim is drawn twice
- * (thick for the small scale, 1px for the final size) and cross-faded.
+ * so it rasterizes sharp at its largest size. Its soft rim is sized for the
+ * halo diameter and scales with the element, like every other layer.
  */
 export function FinalBubble({ spec, t0, layout }: { spec: BubbleSpec; t0: number; layout: StageLayout }) {
   const { x, y, d, rise } = bubbleBox(spec, layout.w, layout.h);
@@ -53,8 +54,6 @@ export function FinalBubble({ spec, t0, layout }: { spec: BubbleSpec; t0: number
   const image = useRef<HTMLImageElement>(null);
   const disc = useRef<HTMLDivElement>(null);
   const specular = useRef<HTMLDivElement>(null);
-  const rimSmall = useRef<HTMLDivElement>(null);
-  const rimLarge = useRef<HTMLDivElement>(null);
   const flash = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
   const droplets = useRef<HTMLDivElement>(null);
@@ -108,15 +107,6 @@ export function FinalBubble({ spec, t0, layout }: { spec: BubbleSpec; t0: number
         { t: discFrom, opacity: 1, easing: easing.inOutQuart },
         { t: discTo, opacity: 0 },
       ]),
-      // Rim: thick while small, 1px at the halo size.
-      track(rimSmall.current, t0, [
-        { t: toCenter, opacity: 1, easing: easing.inOutQuart },
-        { t: atCenter, opacity: 0 },
-      ]),
-      track(rimLarge.current, t0, [
-        { t: toCenter, opacity: 0, easing: easing.inOutQuart },
-        { t: atCenter, opacity: 1 },
-      ]),
       track(flash.current, t0, [
         { t: T.pop, opacity: 0, easing: easing.outQuart },
         { t: T.pop + T.rimFlash / 2, opacity: 1, easing: easing.outQuart },
@@ -137,27 +127,17 @@ export function FinalBubble({ spec, t0, layout }: { spec: BubbleSpec; t0: number
         <BubbleSurface photo={photo} photoRef={image}>
           <div ref={disc} className="absolute inset-0 opacity-0" style={{ background: DISC }} />
         </BubbleSurface>
-        <div
-          ref={rimSmall}
-          className="absolute inset-0 rounded-full"
-          style={{ boxShadow: rimShadow(Math.max(1, 1 / s0)) }}
-        />
-        <div
-          ref={rimLarge}
-          className="absolute inset-0 rounded-full opacity-0"
-          style={{ boxShadow: rimShadow(1) }}
-        />
+        <div className="absolute inset-0 rounded-full" style={{ boxShadow: softRim(size) }} />
         <Specular ref={specular} size={size} />
         <div
           ref={flash}
           className="absolute inset-0 rounded-full opacity-0"
           style={{
-            boxShadow:
-              "inset 0 0 0 2px var(--paper), 0 0 24px 2px color-mix(in oklab, var(--paper) 45%, transparent)",
+            boxShadow: `inset 0 0 ${Math.round(size * 0.05)}px color-mix(in oklab, var(--paper) 70%, transparent), 0 0 ${Math.round(size * 0.06)}px color-mix(in oklab, var(--paper) 40%, transparent)`,
           }}
         />
       </div>
-      <div ref={ring} className="absolute inset-0 rounded-full border border-paper/60 opacity-0" />
+      <div ref={ring} className="absolute inset-0 rounded-full opacity-0" style={{ boxShadow: softRing(size) }} />
       <Droplets ref={droplets} count={DROPLETS} />
     </div>
   );

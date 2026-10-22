@@ -21,11 +21,26 @@ const paper = (alpha: number) => `color-mix(in oklab, var(--paper) ${alpha}%, tr
 /** No photo: dark translucent glass, graphite like the night behind it. */
 const GLASS_FILL = "color-mix(in oklab, var(--halo-deep) 55%, transparent)";
 const GLASS_FRESNEL = `radial-gradient(circle closest-side, transparent 70%, ${paper(8)} 94%, ${paper(14)} 100%)`;
-/** Photo: slight edge darkening, reads as a lens. */
+/** Photo: edge darkening that starts early and runs into the feathered mask. */
 const EDGE_DARKENING =
-  "radial-gradient(circle closest-side, transparent 62%, color-mix(in oklab, var(--ink) 45%, transparent) 100%)";
+  "radial-gradient(circle closest-side, transparent 52%, color-mix(in oklab, var(--ink) 38%, transparent) 90%)";
+/**
+ * Feathered edge instead of a hard clip: the outer ≈ 14 % of the radius fade
+ * into the Tinte behind, so a memory has a soft, slightly blurry border.
+ */
+const FEATHER = "radial-gradient(circle closest-side, #000 86%, rgb(0 0 0 / 0.55) 94%, transparent 100%)";
 
-export const rimShadow = (width: number) => `inset 0 0 0 ${width}px ${paper(30)}`;
+/**
+ * Soft rim of a bubble with diameter `d` (px): a blurred inner glow plus a
+ * faint outer haze instead of a 1px line. Scales with the bubble, so it
+ * reads the same on the final bubble when that one is scaled down.
+ */
+export const softRim = (d: number) =>
+  `inset 0 0 ${Math.round(d * 0.05)}px ${paper(14)}, 0 0 ${Math.round(d * 0.04)}px ${paper(8)}`;
+
+/** Ring that expands when a bubble pops: soft light, no hard line. */
+export const softRing = (d: number) =>
+  `0 0 ${Math.round(d * 0.03)}px ${Math.max(1, Math.round(d * 0.006))}px ${paper(36)}, inset 0 0 ${Math.round(d * 0.03)}px ${paper(24)}`;
 
 /**
  * Decoded photo URL for a bubble. A photo that arrives after the bubble's
@@ -51,7 +66,7 @@ export function Specular({ size, ref }: { size: number; ref?: Ref<HTMLDivElement
       ref={ref}
       className="absolute inset-[4%] rounded-full"
       style={{
-        boxShadow: `inset ${size * 0.045}px ${size * 0.055}px ${size * 0.04}px -${size * 0.012}px ${paper(42)}`,
+        boxShadow: `inset ${size * 0.045}px ${size * 0.055}px ${size * 0.06}px -${size * 0.012}px ${paper(34)}`,
         maskImage: mask,
         WebkitMaskImage: mask,
       }}
@@ -71,7 +86,7 @@ export function Specular({ size, ref }: { size: number; ref?: Ref<HTMLDivElement
   );
 }
 
-/** Round mask with photo (or glass), edge darkening and optional layers on top. */
+/** Round, feathered mask with photo (or glass), edge darkening and optional layers on top. */
 export function BubbleSurface({
   photo,
   photoRef,
@@ -84,7 +99,7 @@ export function BubbleSurface({
   return (
     <div
       className="absolute inset-0 overflow-hidden rounded-full"
-      style={{ background: photo ? "var(--ink)" : GLASS_FILL }}
+      style={{ background: photo ? "var(--ink)" : GLASS_FILL, maskImage: FEATHER, WebkitMaskImage: FEATHER }}
     >
       {photo ? (
         <>
@@ -256,10 +271,10 @@ export function MemoryBubble({
     <div ref={mover} className="absolute left-0 top-0" style={{ width: d, height: d }}>
       <div ref={scaler} className="absolute inset-0 opacity-0">
         <BubbleSurface photo={photo} photoRef={image} />
-        <div className="absolute inset-0 rounded-full" style={{ boxShadow: rimShadow(1) }} />
+        <div className="absolute inset-0 rounded-full" style={{ boxShadow: softRim(d) }} />
         <Specular size={d} />
       </div>
-      <div ref={ring} className="absolute inset-0 rounded-full border border-paper/60 opacity-0" />
+      <div ref={ring} className="absolute inset-0 rounded-full opacity-0" style={{ boxShadow: softRing(d) }} />
       <Droplets ref={droplets} count={DROPLETS} />
       <span
         ref={label}

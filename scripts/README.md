@@ -19,11 +19,11 @@ Beide Skripte lesen die Originale nur. Sie verschieben oder löschen nichts. Meh
 
 1. Zuschnitt 1:1 um einen Fokuspunkt, sonst mittig. `fireworks` wird um das Zentrum des Feuerwerks beschnitten (≈ 52 % / 43 % des Originals), damit das Amber-Zentrum genau in der Blasenmitte liegt.
 2. Selektives Grading: Violett bis Pink (255–345°) wird fast grau, helles LED-Cyan (172–198°) gedämpft. Stahlblau und Graphit bleiben unverändert. `--no-grade` schaltet das ab.
-3. Ausgabe nach `public/intro/<slug>.avif` (640 px, `fireworks` 1300 px) und `<slug>.jpg` (1200 px, Fallback und OG-Bild).
+3. Ausgabe nach `public/intro/<slug>.avif` (1024 px, `fireworks` 1300 px) und `<slug>.jpg` (1200 px, Fallback und OG-Bild).
 4. Größentabelle mit den echten Dateigrößen.
 5. `--manifest` schreibt zusätzlich `src/config/intro-manifest.ts` neu.
 
-**Budget (1 KB = 1000 Byte):** AVIF ≤ 55 KB, `fireworks` ≤ 150 KB, Intro gesamt (AVIF) ≤ 500 KB. Bei Überschreitung endet das Skript mit Exit-Code 1. Abhilfe: `--avif-quality 45`.
+**Budget (1 KB = 1000 Byte):** AVIF ≤ 80 KB, `fireworks` ≤ 150 KB, Intro gesamt (AVIF) ≤ 500 KB. Bei Überschreitung endet das Skript mit Exit-Code 1. Abhilfe: `--avif-quality 45`.
 
 **Hinweis:** Die Originale sind 1024 px groß. `fireworks` (880 px Zuschnitt → 1300 px) und die JPGs (1024 → 1200 px) werden deshalb hochskaliert. Mit größeren Originalen entfällt das ohne Codeänderung.
 

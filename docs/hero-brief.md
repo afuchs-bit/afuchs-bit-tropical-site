@@ -14,7 +14,7 @@ Eine Sommernacht in einer namenlosen Großstadt, mit dem Handy mitgefilmt:
 
 ## Die sieben Bilder
 
-Originale liegen in `assets-src/intro/` (nicht ausgeliefert). `npm run assets:intro` (`scripts/optimize-intro.mjs`) erzeugt daraus `public/intro/<slug>.avif` (640 px, `fireworks` 1300 px) und `<slug>.jpg` (1200 px, Fallback und OG).
+Originale liegen in `assets-src/intro/` (nicht ausgeliefert). `npm run assets:intro` (`scripts/optimize-intro.mjs`) erzeugt daraus `public/intro/<slug>.avif` (1024 px, `fireworks` 1300 px; ≤ 80 KB je Bild, zusammen ≤ 500 KB) und `<slug>.jpg` (1200 px, Fallback und OG).
 
 | # | slug | Motiv | Label | Amber-Licht im Bild |
 |---|---|---|---|---|
@@ -44,7 +44,8 @@ Originale liegen in `assets-src/intro/` (nicht ausgeliefert). `npm run assets:in
 **Blase**
 - **Form:** runde Maske (Inkreis). Das Foto skaliert darin von 1,15 auf 1,0.
 - **Bewegung:** wächst aus einem Punkt, leichte Glanzsichel oben links, steigt ein Stück und platzt.
-- **Größe:** 16–24vmin, auf Mobil ×1,6.
+- **Rand:** weich und etwas schwammig. Das Foto läuft am Rand in die Schwärze aus, statt einer Linie gibt es einen unscharfen Lichtsaum; auch der Ring beim Platzen ist weich.
+- **Größe:** 34–46vmin (bei 1440 × 900 rund 300–410 px), auf Mobil ×1,7 (58–78 % der Breite). Jede Erinnerung füllt kurz den Blick.
 - **Verteilung:** über die ganze Fläche, nie zwei direkt hintereinander auf derselben Bildhälfte.
 - **Tempo:** härter als im alten Brief. Erscheinen in etwa 120 ms mit ease-out-expo, Platzen ebenso schnell. Es soll wie ein Schnitt wirken, nicht wie eine Überblendung.
 

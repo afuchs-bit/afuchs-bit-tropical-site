@@ -4,7 +4,7 @@
  *
  * Reads the seven square originals from assets-src/intro/<slug>.(jpg|jpeg|png|webp)
  * (not deployed) and writes what the site ships:
- *   public/intro/<slug>.avif  640 × 640 (fireworks 1300 × 1300), loaded by the intro
+ *   public/intro/<slug>.avif  1024 × 1024 (fireworks 1300 × 1300), loaded by the intro
  *   public/intro/<slug>.jpg   1200 × 1200, fallback without AVIF and OG image
  *
  * Crop is 1:1 around a per-slug focal point (centre by default). fireworks is
@@ -37,8 +37,13 @@ const KB = 1000;
 /** Dramaturgy order: Stadt → Bewegung → Spannung → Weite → Atempause → Höhepunkt → Knall. */
 const SLUGS = ["towers", "yacht", "storm", "water", "terrace", "rooftop", "fireworks"];
 
+/**
+ * Memory bubbles are up to 46vmin (≈ 414 px at 1440×900, ×1.15 at the cut-in,
+ * DPR 2 ≈ 950 px; phones ≈ 1050 px at DPR 3), so they ship at the full 1024 px
+ * of the originals. fireworks grows into the 70vmin halo.
+ */
 const SPECS = {
-  default: { size: 640, avifBudget: 55 * KB },
+  default: { size: 1024, avifBudget: 80 * KB },
   fireworks: { size: 1300, avifBudget: 150 * KB },
 };
 const JPG_SIZE = 1200;

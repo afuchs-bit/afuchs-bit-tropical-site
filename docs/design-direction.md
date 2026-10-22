@@ -88,7 +88,7 @@ Beide Lichthöfe bestehen dieselben Kontraste (Papier auf Kern 4,3 bzw. 4,2).
 | Gate | Die sieben AVIFs (zusammen 172 KB) laden schon jetzt, `img.decode()` vor dem Start. |
 | 0,0–0,4 | „Ja“ schaltet den Ton frei. Danach Schwärze in Tinte mit 7 % CSS-Korn über allem. |
 | 0,8–4,4 | Sieben Blasen, Start alle 0,6 s, je 0,7 s sichtbar: towers (links oben) → yacht (rechts unten) → storm (links unten) → water (rechts oben) → terrace (links Mitte) → rooftop (rechts Mitte) → fireworks (Mitte unten). Die Blasen wechseln immer die Bildhälfte. |
-| je Blase | Sie erscheint in 120 ms (outExpo) aus einem Punkt und wirkt wie ein Schnitt, keine Überblendung. Das Foto skaliert von 1,15 auf 1,0, oben links sitzt eine Glanzsichel, die Blase steigt 4–6vmin und platzt in 120 ms. Größe 16–24vmin, auf Mobil ×1,6. |
+| je Blase | Sie erscheint in 120 ms (outExpo) aus einem Punkt und wirkt wie ein Schnitt, keine Überblendung. Das Foto skaliert von 1,15 auf 1,0, oben links sitzt eine Glanzsichel, die Blase steigt 3–6vmin und platzt in 120 ms. Größe 34–46vmin, auf Mobil ×1,7. Der Rand läuft weich aus (Maske über die äußeren ≈ 14 % des Radius, unscharfer Lichtsaum statt Linie). |
 | 5,0–5,35 | `fireworks` wandert in die Mitte und wächst auf 70vmin. Das Amber-Zentrum liegt exakt in der Mitte, weil das Bild beim Kodieren um das Feuerwerk beschnitten wird. Das Label rollt von „07 · 00:00“ auf „HEUTE NACHT“. |
 | 5,35–5,55 | Das Foto wird zur flachen Lichtscheibe. Sie platzt, und der Kreis bleibt als Lichthof (Shader mit Mitte und Radius der Blase). |
 | 5,6 | Die Dose steigt aus dem Licht, Bloom auf der Oberkante, tiefer Bass-Schlag. |
@@ -130,7 +130,7 @@ Beide Lichthöfe bestehen dieselben Kontraste (Papier auf Kern 4,3 bzw. 4,2).
   - **Was zu sehen ist:** Im Hintergrund halten Gäste Weingläser, ein Glas steht auf dem Tisch.
   - **Fahrzeugbezug:** Am Steuer ist niemand zu sehen, und die Frau trinkt nicht. Trotzdem stehen Boot und Alkohol im selben Bild.
   - **Statusbezug:** Die Yacht ist das deutlichste Luxus-Signal der Serie.
-  - **Was tun:** vom Werberechtler prüfen lassen. Bei 640 px und 0,7 s sind die Gläser kaum lesbar, aber sie sind da.
+  - **Was tun:** vom Werberechtler prüfen lassen. Seit die Blasen doppelt so groß sind (bis 46vmin), sind die Gläser in den 0,7 s eher zu erkennen.
 - **rooftop:** Am linken Rand halten Gäste Flasche und Glas. Feiern mit Getränken ist zulässig, solange niemand betrunken wirkt, und das ist hier erfüllt. Die pinken und cyanfarbenen LED-Streifen sind beim Kodieren gedämpft.
 - **storm:** Am Fenster stehen Parfumflakons, eine Frau trägt Fußkettchen und Armband. Das ist Schmuck im Sinne eurer Ausschlussliste, in Blasengröße aber nicht erkennbar. Hinweis, kein Blocker.
 - **water:** Die Aufnahme entsteht vom Boot aus, ohne Getränk. Unkritisch.

@@ -87,8 +87,8 @@ Beide Lichthöfe bestehen dieselben Kontraste (Papier auf Kern 4,3 bzw. 4,2).
 |---|---|
 | Gate | Die sieben AVIFs (zusammen 172 KB) laden schon jetzt, `img.decode()` vor dem Start. |
 | 0,0–0,4 | „Ja“ schaltet den Ton frei. Danach Schwärze in Tinte mit 7 % CSS-Korn über allem. |
-| 0,8–5,9 | Sieben Erinnerungsbilder, Start alle 0,75 s, je 1,0 s sichtbar: towers (links oben) → yacht (rechts unten) → storm (links unten) → water (rechts oben) → terrace (links Mitte) → rooftop (rechts Mitte) → fireworks (Mitte unten). Die Bilder wechseln immer die Bildhälfte. |
-| je Bild | Keine klare Blase: kein Rand, kein Glanz, kein Ring. Die innere Hälfte des Radius ist voll sichtbar, die äußere geht fließend ins Schwarz über. Es blendet in 0,3 s ein (Zoom 0,92 → 1,0), steigt 2–4vmin, das Foto zoomt von 1,08 auf 1,0, dann löst es sich in 0,3 s auf. Größe 84–110vmin, abwechselnd etwas links und rechts der Mitte, auf Mobil ×1,2; das Label steht im unteren Teil des Bildes. |
+| 0,8–5,9 | POV-Blinzeln: sieben Fotos bildschirmfüllend, alle 0,75 s ein Lidschlag: towers → yacht → storm → water → terrace → rooftop → fireworks. |
+| je Foto | Die Lider öffnen sich in 0,18 s, das Foto (Vollbild, leichte POV-Vignette) zoomt von 1,04 auf 1,0. 0,6 s nach dem Start schließen sich die Lider in 0,12 s, hinter ihnen wechselt das Foto. Die Lidkanten sind weich gebogen und unscharf. |
 | 5,9–6,25 | `fireworks` wandert in die Mitte und wächst auf 70vmin. Das Amber-Zentrum liegt exakt in der Mitte, weil das Bild beim Kodieren um das Feuerwerk beschnitten wird. Das Label rollt von „07 · 00:00“ auf „HEUTE NACHT“. |
 | 6,2–6,45 | Das Foto wird zur flachen Lichtscheibe. Sie platzt, und der Kreis bleibt als Lichthof (Shader mit Mitte und Radius der Lichtscheibe). |
 | 6,55 | Die Dose steigt aus dem Licht, Bloom auf der Oberkante, tiefer Bass-Schlag. |
@@ -96,16 +96,16 @@ Beide Lichthöfe bestehen dieselben Kontraste (Papier auf Kern 4,3 bzw. 4,2).
 
 ## 6. Eigene Idee: „Was bleibt, ist das Licht“
 
-- **Was beim Platzen bleibt:** Jede Blase wird so platziert, dass ihr Amber-Licht an einer festen Stelle im Raum sitzt. Die Positionen im Bild sind gemessen: towers 58/52 %, yacht 68/67 %, storm 86/71 % usw. Platzt die Blase, verschwindet das Foto, aber **ihr Amber-Licht bleibt** als 4px-Lichtpunkt in der Schwärze hängen.
-- **Wie sich die Lichter sammeln:** Nach sechs Blasen hängen sechs warme Punkte im Dunkeln, eine Spur durch die Nacht. Bei 5,9 s zieht das Feuerwerk in die Mitte, und die sechs Punkte werden mitgezogen. Sie werden zu den ersten Partylichtern um die Dose.
+- **Was beim Blinzeln bleibt:** Schließen sich die Lider, verschwindet das Foto, aber **sein Amber-Licht bleibt als Nachbild** stehen, ein 4px-Lichtpunkt genau dort, wo das Licht im Foto saß (gemessen: towers 64/52 %, yacht 68/67 %, storm 86/71 % usw.). So wie man nach dem Blick in eine Lampe das Licht noch sieht.
+- **Wie sich die Lichter sammeln:** Nach sechs Lidschlägen hängen sechs warme Nachbilder im Dunkeln, eine Spur durch die Nacht. Bei 5,9 s zieht das Feuerwerk in die Mitte, und die sechs Punkte werden mitgezogen. Sie werden zu den ersten Partylichtern um die Dose.
 - **Warum:** Der rote Faden aus dem Brief wird damit sichtbar, statt nur behauptet. Jede Erinnerung hinterlässt ihr Licht, und alle Lichter landen bei der Dose.
 - **Aufwand:** Die Partylichter-Übergabe aus der letzten Blase gibt es schon. Neu sind nur die gemessenen Amber-Koordinaten je Blase und sechs zusätzliche Startpunkte.
 
 ## 7. Motion-Haltung
 
-- **Ruhig fließend:** Das Intro reiht Erinnerungsfetzen, die aus dem Schwarz auftauchen und wieder darin verschwinden (0,3-s-Überblendungen). Der Ruhezustand ist ruhig wie die Nacht danach.
+- **Blinzeln:** Das Intro ist eine Ich-Perspektive, die durch die Nacht blinzelt (Lider auf 0,18 s, zu 0,12 s). Der Ruhezustand ist ruhig wie die Nacht danach.
 - **Kurven:** outExpo und inOutQuart aus `motion.ts`, kein Bounce.
-- **Drei Signatur-Effekte:** Erinnerungen, die im Schwarz verschwinden und ihr Licht zurücklassen, Licht-Wipe, ausweichende Welt.
+- **Drei Signatur-Effekte:** POV-Blinzeln mit Amber-Nachbildern, Licht-Wipe, ausweichende Welt.
 - **Reduced motion:** kein Intro, der Hero steht sofort.
 
 **Genutzte Prinzipien:**

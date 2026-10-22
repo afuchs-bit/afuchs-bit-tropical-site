@@ -2,8 +2,7 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { FINAL_LABEL, T, type BubbleSpec } from "@/config/intro";
-import { bubbleBox } from "../geometry";
-import { LABEL_CLASS, LABEL_GAP } from "./MemoryBubble";
+import { LABEL_CLASS, LABEL_GAP, LABEL_Y } from "./MemoryBubble";
 import type { StageLayout } from "./stageLayout";
 import { LABEL_FADE, LABEL_FLIGHT, LABEL_FLIGHT_DELAY, LABEL_ROLL, LABEL_ROLL_COLUMN } from "./timing";
 import { cancelAll, easing, track, type TimedFrame } from "./waapi";
@@ -24,8 +23,9 @@ function clockTarget(layout: StageLayout, lineHeight: number): { x: number; y: n
 }
 
 /**
- * Label of the final bubble. Shows its own occasion label ("07 · 00:00"),
- * follows the bubble to the halo and stays under the light disc. After the
+ * Label of the final memory. Shows its own occasion label ("07 · 00:00")
+ * low in the full-screen frame like every memory label, follows the photo
+ * to the halo and stays under the light disc. After the
  * pop (T.pop + T.rimFlash) it rolls column by column to FINAL_LABEL
  * ("07 · HEUTE NACHT") while it glides to the hero's 07 ring at the bottom
  * left, and fades out there while the ring fades in (T.header). Monospace,
@@ -47,19 +47,19 @@ export function FinalLabel({ spec, t0, layout }: { spec: BubbleSpec; t0: number;
     if (!el) return;
     const width = el.offsetWidth;
     const lineHeight = el.offsetHeight;
-    const { x, y, d, rise } = bubbleBox(spec, layout.w, layout.h);
     const { cx, cy, r } = layout.halo;
     const [toCenter, atCenter] = T.finalToCenter;
-    const risen = Math.min(spec.start + T.bubbleLife - T.bubbleOut, toCenter);
+    const frameX = layout.w / 2;
+    // below() adds LABEL_GAP; the frame label sits at LABEL_Y of the view.
+    const frameY = layout.h * LABEL_Y - LABEL_GAP;
     const popped = T.pop + T.rimFlash;
     // The box is as wide as the longer label; center what is visible before the roll.
     const visible = (width * from.length) / columns.length;
     const below = (px: number, py: number) => `translate3d(${px - visible / 2}px, ${py + LABEL_GAP}px, 0)`;
 
     const path: TimedFrame[] = [
-      { t: spec.start, transform: below(x, y + d / 2), easing: easing.outQuart },
-      { t: risen, transform: below(x, y - rise + d / 2) },
-      { t: toCenter, transform: below(x, y - rise + d / 2), easing: easing.inOutQuart },
+      { t: spec.start, transform: below(frameX, frameY) },
+      { t: toCenter, transform: below(frameX, frameY), easing: easing.inOutQuart },
       { t: atCenter, transform: below(cx, cy + r) },
     ];
     const target = clockTarget(layout, lineHeight);
@@ -78,8 +78,8 @@ export function FinalLabel({ spec, t0, layout }: { spec: BubbleSpec; t0: number;
     const step = (LABEL_ROLL - LABEL_ROLL_COLUMN) / Math.max(1, rolling.length - 1);
 
     const opacity: TimedFrame[] = [
-      { t: spec.start + T.bubbleIn * 0.5, opacity: 0, easing: easing.outExpo },
-      { t: spec.start + T.bubbleIn, opacity: 1 },
+      { t: spec.start + T.eyeOpen * 0.5, opacity: 0, easing: easing.outQuart },
+      { t: spec.start + T.eyeOpen, opacity: 1 },
     ];
     if (target) {
       opacity.push(

@@ -5,7 +5,7 @@ import { T, bubbles } from "@/config/intro";
 import { seededRandom } from "@/lib/seededRandom";
 import { amberPoint } from "../geometry";
 import { useHero } from "../store";
-import { memoryPopAt } from "./MemoryBubble";
+import { memoryCloseAt } from "./MemoryBubble";
 import type { StageLayout } from "./stageLayout";
 import { TRAIL_DRIFT, TRAIL_FADE } from "./timing";
 import { cancelAll, easing, track } from "./waapi";
@@ -24,7 +24,7 @@ const GLOW =
 type Point = { id: string; at: number; x: number; y: number };
 
 function trailPoints(w: number, h: number): Point[] {
-  return memories.map((spec) => ({ id: spec.id, at: memoryPopAt(spec), ...amberPoint(spec, w, h) }));
+  return memories.map((spec) => ({ id: spec.id, at: memoryCloseAt(spec), ...amberPoint(spec, w, h) }));
 }
 
 /**

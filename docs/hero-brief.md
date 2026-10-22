@@ -36,18 +36,17 @@ Originale liegen in `assets-src/intro/` (nicht ausgeliefert). `npm run assets:in
 |---|---|
 | 0,0 s | Age Gate. „Ja“ startet das Intro; der Klick schaltet auch Audio frei. |
 | +0,4 s | Schwärze mit feinem Korn (CSS-Ebene, etwa 7 %, über allem). |
-| +0,8–5,9 s | Sieben Erinnerungsbilder im Abstand von 0,75 s, je etwa 1,0 s sichtbar, überlappend. Siehe „Erinnerungsbild“ unten. |
+| +0,8–5,9 s | POV-Blinzeln durch sieben Fotos, alle 0,75 s ein Lidschlag. Siehe „Blinzeln“ unten. |
 | +5,9 s | `fireworks` wandert in die Mitte und wächst auf 70vmin; das Amber-Zentrum liegt exakt in der Bildmitte. Es wird zur flachen Lichtscheibe, dann zum Lichthof: ein Shader, dessen Uniforms Mittelpunkt und Radius der Blase übernehmen. |
 | +6,55 s | Die Dose erscheint aus dem Licht, Bloom auf der Oberkante. Optional ein tiefer Bass-Schlag. |
 | +7,35 s | Headline-Reveal, danach Header, Infotext, CTAs. Ab 8,0 s Ruhezustand. |
 
 **Blase**
 - **Form:** runde Maske (Inkreis). Das Foto skaliert darin von 1,15 auf 1,0.
-- **Keine Blase:** kein Rand, kein Glanz, kein Ring. Die innere Hälfte des Radius ist voll sichtbar, damit das Foto erkennbar bleibt; die äußere Hälfte geht fließend ins Schwarz über.
-- **Bewegung:** blendet in 0,3 s weich ein (leichter Zoom 0,92 → 1,0), steigt ein Stück, das Foto zoomt von 1,08 auf 1,0, dann löst es sich in 0,3 s wieder auf. Das Label steht im unteren Teil des Bildes.
-- **Größe:** 84–110vmin (bei 1440 × 900 rund 760–990 px), auf Mobil ×1,2 (100–130 % der Breite). Die Bilder erscheinen abwechselnd etwas links und etwas rechts der Mitte und ragen über den Bildschirmrand; Label und Amber-Punkt bleiben sichtbar. Das Feuerwerk hat 70vmin, die Größe des Lichthofs.
-- **Verteilung:** über die ganze Fläche, nie zwei direkt hintereinander auf derselben Bildhälfte.
-- **Tempo:** ruhiger als der erste Stand (0,6 s Abstand, 120-ms-Schnitte): jetzt 0,75 s Abstand, 1,0 s Sichtdauer, 0,3 s Ein- und Ausblenden.
+- **Ich-Perspektive:** Jedes Foto füllt den Bildschirm, mit leichter POV-Vignette. Zwischen zwei Fotos blinzelt man: Die Lider (Tinte, weich gebogene, unscharfe Kante) schließen sich, hinter ihnen wechselt das Foto, sie öffnen sich wieder.
+- **Blinzeln:** Lider auf in 0,18 s, offen bis 0,6 s nach dem Start, zu in 0,12 s. Beim Öffnen zoomt das Foto leicht von 1,04 auf 1,0. Vor dem ersten Foto sind die Lider geschlossen, nach dem Feuerwerk bleiben sie offen.
+- **Nachbild:** Kurz bevor sich die Lider schließen, leuchtet das Amber-Licht des Fotos auf und bleibt als Nachbild im Dunkeln stehen (an der gemessenen Licht-Position, auf dem Handy in den 3D-Bereich geklemmt).
+- **Label:** unten mittig im Bild, solange es offen ist.
 
 **Immer:**
 - „Intro überspringen“ ist sichtbar.

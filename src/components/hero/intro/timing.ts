@@ -1,6 +1,6 @@
 /**
- * Intro micro-timings that src/config/intro.ts does not carry. The bubble
- * cut (T.bubbleIn / T.bubbleOut), the pop and the intro/scene hand-off live
+ * Intro micro-timings that src/config/intro.ts does not carry. The blink
+ * (T.eyeOpen / eyeHold / eyeClose), the pop and the intro/scene hand-off live
  * in T, both sides read them there; these are DOM-only details. Kept in one
  * place so tuning stays a one-line change.
  */

@@ -3,7 +3,7 @@
  * halo shader must use the same center and radius, or the switch shows a
  * jump. Everything in viewport CSS px.
  */
-import { MOBILE_BUBBLE_SCALE, type BubbleSpec } from "@/config/intro";
+import type { BubbleSpec } from "@/config/intro";
 
 export const MOBILE_BREAKPOINT = 768;
 
@@ -25,34 +25,30 @@ export function haloGeometry(width: number, height: number): HaloGeometry {
   return { cx: width / 2, cy: height / 2, r: Math.min(width, height) * 0.35 };
 }
 
-/** A memory bubble in viewport px: center, diameter, rise distance. */
-export type BubbleBox = { x: number; y: number; d: number; rise: number };
-
-/** Portrait phones use the mobile positions and larger bubbles. */
+/** Portrait phones (used for the stage layout). */
 export function isPortraitStage(width: number, height: number): boolean {
   return isMobileLayout(width) && height >= width;
 }
 
-export function bubbleBox(spec: BubbleSpec, width: number, height: number): BubbleBox {
-  const portrait = isPortraitStage(width, height);
-  const vmin = Math.min(width, height) / 100;
-  return {
-    x: ((portrait ? spec.mx : spec.x) / 100) * width,
-    y: ((portrait ? spec.my : spec.y) / 100) * height,
-    d: spec.size * vmin * (portrait ? MOBILE_BUBBLE_SCALE : 1),
-    rise: spec.rise * vmin,
-  };
-}
+/** Afterimages stay this far inside the viewport (share of each side). */
+const AMBER_MARGIN = 0.06;
 
 /**
- * Where a bubble's amber light sits on screen at the moment it pops (fully
- * risen, photo at scale 1.0). The DOM leaves a light point there and the
- * scene starts a party light from the same pixel, so the hand-off is seamless.
+ * Where a memory's amber light sits on screen. Memories are full-screen POV
+ * photos: the square photo covers the viewport (side max(w, h), centered).
+ * A light that falls outside the visible part (phones crop left and right)
+ * is pulled to the edge; on portrait phones it also stays above 62svh,
+ * inside the canvas that takes the afterimages over as party lights. The DOM
+ * draws the afterimage here and the scene starts a party light from the same
+ * pixel, so the hand-off is seamless.
  */
 export function amberPoint(spec: BubbleSpec, width: number, height: number): { x: number; y: number } {
-  const b = bubbleBox(spec, width, height);
+  const side = Math.max(width, height);
+  const x = width / 2 + (spec.amber[0] / 100 - 0.5) * side;
+  const y = height / 2 + (spec.amber[1] / 100 - 0.5) * side;
+  const maxY = isMobileLayout(width) ? height * MOBILE_SCENE_HEIGHT - 12 : height * (1 - AMBER_MARGIN);
   return {
-    x: b.x + (spec.amber[0] / 100 - 0.5) * b.d,
-    y: b.y - b.rise + (spec.amber[1] / 100 - 0.5) * b.d,
+    x: Math.min(width * (1 - AMBER_MARGIN), Math.max(width * AMBER_MARGIN, x)),
+    y: Math.min(maxY, Math.max(height * AMBER_MARGIN, y)),
   };
 }

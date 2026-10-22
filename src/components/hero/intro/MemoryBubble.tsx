@@ -3,18 +3,15 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode, type Ref } from "react";
 import { T, type BubbleId, type BubbleSpec } from "@/config/intro";
 import { seededRandom } from "@/lib/seededRandom";
-import { bubbleBox } from "../geometry";
 import { getBubbleImage, onIntroImagesChange } from "./preload";
-import type { StageLayout } from "./stageLayout";
 import { DROPLET_LIFE } from "./timing";
 import { cancelAll, easing, track } from "./waapi";
 
 /*
- * One memory: DOM + native WAAPI (transform / opacity only). Not a clean
- * bubble: the photo dissolves into the black from the middle outwards, like
- * a half-remembered moment. Structure: mover (position, rise) › scaler (fade
- * in, fade out) › surface, plus the label as a sibling of the scaler so it
- * does not scale. Positions and sizes from bubbleBox() (geometry.ts).
+ * Memories as a POV blink: every photo fills the screen and is seen between
+ * two blinks (Eyelids.tsx). DOM + native WAAPI (transform / opacity only).
+ * The round, dissolving surface below (BubbleSurface) is what the final
+ * memory shrinks into when it becomes the light halo.
  */
 
 /** No photo: a faint graphite glow, no edge. */
@@ -131,97 +128,102 @@ export function Droplets({ count, ref }: { count: number; ref?: Ref<HTMLDivEleme
   );
 }
 
-/** Mono label under a bubble: 12px, uppercase, full Papier, no glow. */
+/** Mono label of a memory: 12px, uppercase, full Papier, no glow. */
 export const LABEL_CLASS =
   "whitespace-pre font-mono text-meta leading-4 uppercase tabular-nums text-paper";
-/** Gap between bubble and label (px). */
+/** Gap between the light disc and the final label (px). */
 export const LABEL_GAP = 12;
-/** Memory labels sit inside the lower visible part of the image (% of its box height). */
-const LABEL_TOP = "83%";
+/** Memory labels sit low in the frame, centered (share of the viewport height). */
+export const LABEL_Y = 0.78;
 
+/** POV vignette: the edges of the view fall off into the Tinte. */
+const VIGNETTE =
+  "radial-gradient(ellipse 75% 70% at 50% 50%, transparent 55%, color-mix(in oklab, var(--ink) 55%, transparent) 85%, var(--ink) 100%)";
 
-/** The moment a memory starts to fade out: fully risen, photo at scale 1.0. */
-export function memoryPopAt(spec: BubbleSpec): number {
-  return spec.start + T.bubbleLife - T.bubbleOut;
+/** The moment the lids start to close on a memory: its afterimage lights up. */
+export function memoryCloseAt(spec: BubbleSpec): number {
+  return spec.start + T.eyeHold;
 }
 
 /**
- * Memories 1–6: fades in out of the black over T.bubbleIn (0.92 → 1.0), rises
- * by spec.rise while the photo settles from 1.08 to 1.0, and dissolves back
- * over T.bubbleOut (a touch larger, gone). Its amber light stays (AmberTrail).
+ * One memory, full screen. Visible from its start (the lids open on it,
+ * the photo settles from 1.04 to 1.0) until the lids are shut again
+ * (`hideAt`, default: start + eyeHold + eyeClose); behind the closed lids it
+ * simply disappears, so two photos never cross-fade. The final memory passes
+ * `hideAt` and `fade`: it stays open and fades out while it shrinks into the
+ * halo (FinalBubble).
  */
-export function MemoryBubble({
+export function MemoryFrame({
   spec,
   t0,
-  layout,
+  hideAt,
+  fade = 0,
 }: {
   spec: BubbleSpec;
   t0: number;
-  layout: StageLayout;
+  hideAt?: number;
+  fade?: number;
 }) {
-  const { x, y, d, rise } = bubbleBox(spec, layout.w, layout.h);
   const photo = useBubbleImage(spec.id, t0 + spec.start * 1000);
-
-  const mover = useRef<HTMLDivElement>(null);
-  const scaler = useRef<HTMLDivElement>(null);
+  const frame = useRef<HTMLDivElement>(null);
   const image = useRef<HTMLImageElement>(null);
   const label = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
     const start = spec.start;
-    const cut = start + T.bubbleIn;
-    const popAt = memoryPopAt(spec);
-    const end = popAt + T.bubbleOut;
-    const place = (cy: number) => `translate3d(${x - d / 2}px, ${cy - d / 2}px, 0)`;
-    const labelAt = (dy: number) => `translate3d(-50%, ${dy}px, 0)`;
+    const opened = start + T.eyeOpen;
+    const hidden = hideAt ?? memoryCloseAt(spec) + T.eyeClose;
+    // A hard cut behind the closed lids, or a fade for the final memory.
+    const out = Math.max(fade, 0.001);
 
     const animations = [
-      track(
-        mover.current,
-        t0,
-        [
-          { t: start, transform: place(y), easing: easing.outQuart },
-          { t: popAt, transform: place(y - rise) },
-        ],
-        { fill: "both" },
-      ),
-      track(scaler.current, t0, [
-        { t: start, transform: "scale(0.92)", opacity: 0, easing: easing.outQuart },
-        { t: cut, transform: "scale(1)", opacity: 1 },
-        { t: popAt, transform: "scale(1)", opacity: 1, easing: easing.inOutQuart },
-        { t: end, transform: "scale(1.04)", opacity: 0 },
+      track(frame.current, t0, [
+        { t: start, opacity: 1 },
+        { t: hidden, opacity: 1, easing: easing.outQuart },
+        { t: hidden + out, opacity: 0 },
       ]),
       track(
         image.current,
         t0,
         [
-          { t: start, transform: "scale(1.08)", easing: easing.outQuart },
-          { t: popAt, transform: "scale(1)" },
+          { t: start, transform: "scale(1.04)", easing: easing.outQuart },
+          { t: opened + 0.3, transform: "scale(1)" },
         ],
         { fill: "both" },
       ),
       track(label.current, t0, [
-        { t: start + T.bubbleIn * 0.5, transform: labelAt(4), opacity: 0, easing: easing.outExpo },
-        { t: cut, transform: labelAt(0), opacity: 1 },
-        { t: popAt, transform: labelAt(0), opacity: 1, easing: easing.outQuart },
-        { t: end, transform: labelAt(0), opacity: 0 },
+        { t: start + T.eyeOpen * 0.5, opacity: 0, easing: easing.outQuart },
+        { t: opened, opacity: 1 },
+        { t: hidden, opacity: 1 },
+        { t: hidden + out, opacity: 0 },
       ]),
     ];
     return () => cancelAll(animations);
-  }, [t0, spec, x, y, d, rise, photo]);
+  }, [t0, spec, hideAt, fade, photo]);
 
   return (
-    <div ref={mover} className="absolute left-0 top-0" style={{ width: d, height: d }}>
-      <div ref={scaler} className="absolute inset-0 opacity-0">
-        <BubbleSurface photo={photo} photoRef={image} />
-      </div>
-      <span
-        ref={label}
-        className={`absolute left-1/2 opacity-0 ${LABEL_CLASS}`}
-        style={{ top: LABEL_TOP }}
-      >
-        {spec.label}
-      </span>
+    <div ref={frame} className="absolute inset-0 opacity-0" style={{ background: photo ? "var(--ink)" : GLASS_FILL }}>
+      {photo ? (
+        // eslint-disable-next-line @next/next/no-img-element -- pre-encoded AVIF/JPG, decoded up front; next/image would request another URL and miss the cache
+        <img
+          ref={image}
+          src={photo}
+          alt=""
+          draggable={false}
+          decoding="async"
+          className="absolute inset-0 size-full object-cover"
+        />
+      ) : null}
+      <div className="absolute inset-0" style={{ background: VIGNETTE }} />
+      {hideAt === undefined ? (
+        <span
+          ref={label}
+          className={`absolute left-1/2 -translate-x-1/2 opacity-0 ${LABEL_CLASS}`}
+          style={{ top: `${LABEL_Y * 100}%` }}
+        >
+          {spec.label}
+        </span>
+      ) : null}
     </div>
   );
 }

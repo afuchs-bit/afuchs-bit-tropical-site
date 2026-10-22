@@ -13,12 +13,12 @@ export const T = {
   gateOut: [0, 0.3],
   /** Black with grain is fully there. */
   grain: 0.4,
-  /** Visible life of one memory (fade in, rise, fade out). */
-  bubbleLife: 1.0,
-  /** A memory fades in out of the black … */
-  bubbleIn: 0.3,
-  /** … and dissolves back into it. */
-  bubbleOut: 0.3,
+  /** POV blink per memory: the lids open in this long (outQuart) … */
+  eyeOpen: 0.18,
+  /** … stay open until this long after the memory's start … */
+  eyeHold: 0.6,
+  /** … and close in this long; the next memory opens behind them. */
+  eyeClose: 0.12,
   /** The last memory (fireworks) drifts to the halo center and grows to the halo size. */
   finalToCenter: [5.9, 6.25],
   /** Its photo turns into a flat light disc. */
@@ -66,53 +66,37 @@ export type BubbleId = OccasionSlug;
 
 export type BubbleSpec = {
   id: BubbleId;
-  /** Shown next to the bubble, Geist Mono 12px, Papier (from content/occasions). */
+  /** Shown under the memory, Geist Mono 12px, Papier (from content/occasions). */
   label: string;
-  /** Start in seconds since t0. */
+  /** Start in seconds since t0: the lids open on this memory. */
   start: number;
-  /** Center in % of the viewport (desktop / mobile portrait). */
-  x: number;
-  y: number;
-  mx: number;
-  my: number;
-  /** Diameter in vmin; portrait mobile multiplies by MOBILE_BUBBLE_SCALE. */
-  size: number;
-  /** Rise distance in vmin. */
-  rise: number;
   /**
    * Where the photo's single amber light sits, in % of the square photo
-   * (measured: centroid of the amber pixels). When the bubble pops, this is
-   * the point that stays behind ("Was bleibt, ist das Licht").
+   * (measured: centroid of the amber pixels). When the lids close, this light
+   * stays as an afterimage ("Was bleibt, ist das Licht").
    */
   amber: [number, number];
 };
 
-export const MOBILE_BUBBLE_SCALE = 1.2;
-
-/** Seconds between two bubble starts. */
+/** Seconds between two memories (one blink each). */
 export const BUBBLE_STEP = 0.75;
 export const FIRST_BUBBLE = 0.8;
 
 /**
- * Layout per slug, in dramaturgy order. Memories are very large (84–110vmin,
- * phones ×1.2 ≈ 100–130 % of the width) and dissolve into the black from the
- * middle outwards, so an image runs past the screen edges; its recognizable
- * core sits near the middle, alternately a little left and a little right.
- * The label sits inside the lower part of the visible image (MemoryBubble),
- * the amber point stays on screen, and on portrait phones every amber point
- * stays above 62svh, inside the canvas that takes the points over as party
- * lights. fireworks is already the halo size (70vmin), so it only drifts to
- * the center. Checked at 1280×720, 1440×900, 1920×1080, 390×844 and 375×667.
+ * Per slug, in dramaturgy order. Every memory fills the screen (POV), so
+ * only the measured amber light is left to configure: amberPoint()
+ * (geometry.ts) maps it onto the viewport for the afterimage and the scene.
  */
-const layout: Record<OccasionSlug, Omit<BubbleSpec, "id" | "label" | "start">> = {
-  towers: { x: 38, y: 46, mx: 46, my: 30, size: 104, rise: 4, amber: [58, 52] },
-  yacht: { x: 62, y: 50, mx: 54, my: 34, size: 96, rise: 4, amber: [68, 67] },
-  storm: { x: 37, y: 50, mx: 44, my: 30, size: 90, rise: 3, amber: [86, 71] },
-  water: { x: 63, y: 46, mx: 56, my: 33, size: 110, rise: 4, amber: [80, 73] },
-  terrace: { x: 36, y: 50, mx: 44, my: 32, size: 84, rise: 3, amber: [52, 63] },
-  rooftop: { x: 64, y: 48, mx: 56, my: 33, size: 100, rise: 4, amber: [48, 48] },
+const layout: Record<OccasionSlug, Pick<BubbleSpec, "amber">> = {
+  // Two amber windows: the brighter one (right tower), not their centroid.
+  towers: { amber: [64, 52] },
+  yacht: { amber: [68, 67] },
+  storm: { amber: [86, 71] },
+  water: { amber: [80, 73] },
+  terrace: { amber: [52, 63] },
+  rooftop: { amber: [48, 48] },
   // Cropped around the burst by scripts/optimize-intro.mjs: amber sits in the middle.
-  fireworks: { x: 50, y: 52, mx: 50, my: 33, size: 70, rise: 2, amber: [50, 50] },
+  fireworks: { amber: [50, 50] },
 };
 
 /** Seven memories; the last one (fireworks) becomes the light halo. */

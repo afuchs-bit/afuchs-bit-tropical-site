@@ -6,18 +6,19 @@ import { T, bubbles } from "@/config/intro";
 import { SoundToggle } from "../SoundToggle";
 import { useHero } from "../store";
 import { AmberTrail } from "./AmberTrail";
-import { FinalBubble } from "./FinalBubble";
+import { FINAL_HANDOVER, FinalBubble } from "./FinalBubble";
 import { FinalLabel } from "./FinalLabel";
 import { LightHalo } from "./LightHalo";
 import { LightSeed } from "./LightSeed";
-import { MemoryBubble } from "./MemoryBubble";
+import { Eyelids } from "./Eyelids";
+import { MemoryFrame } from "./MemoryBubble";
 import { isIntroRunning } from "./mode";
 import { SkipIntro } from "./SkipIntro";
 import { useStageLayout } from "./stageLayout";
 import { STAGE_FADE } from "./timing";
 import { easing, track } from "./waapi";
 
-/** The last bubble becomes the light halo; all others are memories. */
+/** The last memory becomes the light halo; all others are seen between blinks. */
 const finalSpec = bubbles[bubbles.length - 1];
 const memorySpecs = bubbles.slice(0, -1);
 
@@ -142,9 +143,13 @@ function Stage({ t0, leaving, onLeft }: { t0: number; leaving: boolean; onLeft: 
       <div ref={bubbleLayer} className={`${LAYER} z-[45]`}>
         <div aria-hidden="true" className="absolute inset-0">
           {memorySpecs.map((spec) => (
-            <MemoryBubble key={spec.id} spec={spec} t0={t0} layout={layout} />
+            <MemoryFrame key={spec.id} spec={spec} t0={t0} />
           ))}
+          {finalSpec && (
+            <MemoryFrame spec={finalSpec} t0={t0} hideAt={T.finalToCenter[0]} fade={FINAL_HANDOVER} />
+          )}
           {finalSpec && <FinalBubble spec={finalSpec} t0={t0} layout={layout} />}
+          <Eyelids t0={t0} />
           <AmberTrail t0={t0} layout={layout} />
           {finalSpec && <FinalLabel spec={finalSpec} t0={t0} layout={layout} />}
         </div>

@@ -5,15 +5,15 @@ import { haloGeometry, isMobileLayout, isPortraitStage, type HaloGeometry } from
 
 /**
  * Viewport geometry of the intro in CSS px (window.innerWidth/innerHeight,
- * the same numbers the scene passes to geometry.ts). Bubble boxes and amber
- * points come from bubbleBox() / amberPoint() in geometry.ts, so the DOM and
- * the scene agree to the pixel: the final bubble lands exactly on
- * haloGeometry(), the amber trail starts the scene's party lights.
+ * the same numbers the scene passes to geometry.ts). Afterimages come from
+ * amberPoint() in geometry.ts, so the DOM and the scene agree to the pixel:
+ * the final memory lands exactly on haloGeometry(), the afterimages start
+ * the scene's party lights.
  */
 export type StageLayout = {
   w: number;
   h: number;
-  /** Portrait phone: mx/my positions, sizes × MOBILE_BUBBLE_SCALE. */
+  /** Portrait phone. */
   portrait: boolean;
   mobile: boolean;
   halo: HaloGeometry;

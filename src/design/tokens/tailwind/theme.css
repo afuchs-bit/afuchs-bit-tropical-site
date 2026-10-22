@@ -1,0 +1,238 @@
+/*
+ * design-taste · Tailwind CSS v4 Theme (Tokens v0)
+ *
+ * Einbinden in app/globals.css:
+ *   @import "tailwindcss";
+ *   @import "../design/tokens/tailwind/theme.css";   (Pfad anpassen)
+ *
+ * Palette wählen:   <html data-palette="moos"> …
+ * Dunkle Sektion:   <section data-tone="dark"> …   (bg-surface / text-on-surface folgen automatisch)
+ * Schriften:        über next/font in tokens/fonts/*.ts, die Klassen auf <html> setzen.
+ *
+ * Alles hier ist Orientierung. Werte für jeden Kunden anpassen.
+ */
+
+/* ------------------------------------------------------------------ */
+/* 1. Paletten: Papier · Tinte · Signal · Signal-Text · Tiefe          */
+/* ------------------------------------------------------------------ */
+
+:root,
+[data-palette="verso"] {
+  --paper: #f3f0e8;
+  --ink: #0d0f0c;
+  --signal: #00d47f;
+  --signal-text: #007d4b;
+  --deep: #0a3d2a;
+}
+[data-palette="lime-nacht"] {
+  --paper: #efefe5;
+  --ink: #282c20;
+  --signal: #d2ff00;
+  --signal-text: #5c7000;
+  --deep: #1a1d14;
+}
+[data-palette="studio"] {
+  --paper: #fcfcfa;
+  --ink: #131313;
+  --signal: #e8641e;
+  --signal-text: #c45114;
+  --deep: #171715;
+}
+[data-palette="ultramarin"] {
+  --paper: #f4f4f2;
+  --ink: #111111;
+  --signal: #ff5500;
+  --signal-text: #c74200;
+  --deep: #0b1a9e;
+}
+[data-palette="abendlicht"] {
+  --paper: #eaedeb;
+  --ink: #1b2120;
+  --signal: #f8ed7f;
+  --signal-text: #776c06;
+  --deep: #2c3634;
+}
+[data-palette="moos"] {
+  --paper: #f2efe6;
+  --ink: #161a14;
+  --signal: #9bcb4a;
+  --signal-text: #557421;
+  --deep: #1e3a26;
+}
+[data-palette="baustelle"] {
+  --paper: #efede8;
+  --ink: #141414;
+  --signal: #ffb000;
+  --signal-text: #8f6300;
+  --deep: #262522;
+}
+
+/* Fläche und Text je Sektion. Hell ist Standard, data-tone="dark" tauscht. */
+:root,
+[data-tone="light"] {
+  --surface: var(--paper);
+  --on-surface: var(--ink);
+  --accent-text: var(--signal-text);
+}
+[data-tone="dark"] {
+  --surface: var(--deep);
+  --on-surface: var(--paper);
+  --accent-text: var(--signal);
+}
+[data-tone="ink"] {
+  --surface: var(--ink);
+  --on-surface: var(--paper);
+  --accent-text: var(--signal);
+}
+
+/* ------------------------------------------------------------------ */
+/* 2. Tailwind-Theme                                                   */
+/* ------------------------------------------------------------------ */
+
+@theme inline {
+  /* Farben → bg-paper, text-ink, bg-signal, text-signal-text, bg-deep … */
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-signal: var(--signal);
+  --color-signal-text: var(--signal-text);
+  --color-deep: var(--deep);
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-accent-text: var(--accent-text);
+
+  /* Tinte nur über Deckkraft abstufen (siehe palettes.md) */
+  --color-ink-72: color-mix(in oklab, var(--ink) 72%, transparent);
+  --color-ink-56: color-mix(in oklab, var(--ink) 56%, transparent);
+  --color-ink-16: color-mix(in oklab, var(--ink) 16%, transparent);
+  --color-ink-8: color-mix(in oklab, var(--ink) 8%, transparent);
+  --color-on-surface-72: color-mix(in oklab, var(--on-surface) 72%, transparent);
+  --color-on-surface-16: color-mix(in oklab, var(--on-surface) 16%, transparent);
+
+  /* Schriftrollen → font-display, font-text, font-accent, font-mono
+     Die --nf-* Variablen setzt next/font (tokens/fonts/*.ts). */
+  --font-display: var(--nf-display), ui-sans-serif, system-ui, sans-serif;
+  --font-text: var(--nf-text), ui-sans-serif, system-ui, sans-serif;
+  --font-accent: var(--nf-accent), ui-serif, Georgia, serif;
+  --font-mono: var(--nf-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+@theme {
+  /* Typo-Skala (typography.md) → text-display-2xl, text-display-xl … */
+  --text-display-2xl: clamp(4.5rem, 2.6rem + 8vw, 11rem);
+  --text-display-2xl--line-height: 0.88;
+  --text-display-2xl--letter-spacing: -0.045em;
+
+  --text-display-xl: clamp(3.5rem, 2.3rem + 5.2vw, 8rem);
+  --text-display-xl--line-height: 0.9;
+  --text-display-xl--letter-spacing: -0.04em;
+
+  --text-display-l: clamp(2.75rem, 2rem + 3.2vw, 5.5rem);
+  --text-display-l--line-height: 0.95;
+  --text-display-l--letter-spacing: -0.035em;
+
+  --text-title: clamp(1.5rem, 1.3rem + 0.8vw, 2.25rem);
+  --text-title--line-height: 1.1;
+  --text-title--letter-spacing: -0.02em;
+
+  --text-body-l: clamp(1.125rem, 1.05rem + 0.35vw, 1.375rem);
+  --text-body-l--line-height: 1.45;
+  --text-body-l--letter-spacing: -0.01em;
+
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+
+  --text-small: 0.9375rem;
+  --text-small--line-height: 1.5;
+
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1.3;
+  --text-meta--letter-spacing: 0.08em;
+
+  /* Abstände → py-section, gap-gutter … */
+  --spacing-section: clamp(6rem, 4rem + 8vw, 12rem);
+  --spacing-gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+
+  /* Radien: eine Marke wählt EINE Radius-Stufe und bleibt dabei */
+  --radius-sharp: 0px;
+  --radius-soft: 0.625rem;
+  --radius-card: 1.25rem;
+
+  /* Bewegung (motion.ts nutzt dieselben Kurven) → ease-out-expo … */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ------------------------------------------------------------------ */
+/* 3. Basis und kleine Utilities                                       */
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-text);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  [data-tone] {
+    background: var(--surface);
+    color: var(--on-surface);
+  }
+  ::selection {
+    background: var(--signal);
+    color: var(--ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--signal-text);
+    outline-offset: 3px;
+  }
+}
+
+/* Mono-Label nach Prinzip 5: Versalien, gesperrt, gedämpft */
+@utility meta-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  line-height: var(--text-meta--line-height);
+  letter-spacing: var(--text-meta--letter-spacing);
+  text-transform: uppercase;
+  color: color-mix(in oklab, currentColor 72%, transparent);
+}
+
+/* Akzentwort nach Prinzip 14: <em class="accent-word">speed</em> */
+@utility accent-word {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent-text);
+  letter-spacing: -0.01em;
+}
+
+/* Breite Schriftachse für Paarung C/D: class="font-display wdth-125" */
+@utility wdth-* {
+  font-variation-settings: "wdth" --value(integer);
+  font-stretch: calc(--value(integer) * 1%);
+}
+
+/* Weiches Scrollen (Lenis) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

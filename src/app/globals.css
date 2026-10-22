@@ -1,5 +1,44 @@
 @import "tailwindcss";
+@import "../design/tokens/tailwind/theme.css";
 @import "../styles/theme.css";
+@source "../design";
+
+/*
+ * Flavor colors are registered so they can interpolate. <html> switches the
+ * value instantly; elements that opt in with `signal-wave` transition their
+ * own computed value, with a per-element delay (--wave-delay) so the color
+ * change travels with the light wave of the flavor switch.
+ */
+@property --signal {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffa647;
+}
+@property --deep {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0f181d;
+}
+@property --halo-core {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #a35c1c;
+}
+@property --halo-mid {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4a2c14;
+}
+@property --halo-deep {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0f181d;
+}
+@property --halo-edge {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #05090c;
+}
 
 @layer base {
   :root {
@@ -7,49 +46,46 @@
   }
 
   html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
 
+  /* The home page is a night scene; legal pages stay on Papier. */
+  html:has(#hero) {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
   body {
-    background: var(--color-paper);
-    color: var(--color-ink);
-    font-family: var(--font-body);
-    font-feature-settings: "kern", "liga", "ss01";
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "kern", "liga";
   }
+}
 
-  ::selection {
-    background: var(--color-signal);
-    color: var(--color-depth);
-  }
+/* Gate state is set before first paint by the inline head script. Outside
+   the base layer so no display utility on the gate can override it. */
+html[data-age="verified"] [data-age-gate] {
+  display: none !important;
+}
 
-  :focus-visible {
-    outline: 2px solid var(--color-signal);
-    outline-offset: 3px;
-  }
+/* Display role: Instrument Serif Italic (one static cut). */
+@utility font-hero {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+}
 
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
+@utility signal-wave {
+  transition:
+    --signal 600ms var(--ease-in-out-quart) var(--wave-delay, 0ms),
+    --deep 600ms var(--ease-in-out-quart) var(--wave-delay, 0ms);
 }
 
 @utility mono-label {
   font-family: var(--font-mono);
-  font-size: var(--text-mono);
-  letter-spacing: var(--text-mono--letter-spacing);
+  font-size: var(--text-meta);
+  line-height: var(--text-meta--line-height);
+  letter-spacing: var(--text-meta--letter-spacing);
   text-transform: uppercase;
-  color: var(--color-ink-2);
+  color: color-mix(in oklab, currentColor 72%, transparent);
 }
 
 @utility container-content {

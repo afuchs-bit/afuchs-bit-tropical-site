@@ -81,29 +81,29 @@ Beide Lichthöfe bestehen dieselben Kontraste (Papier auf Kern 4,3 bzw. 4,2).
   - Unten links steht „07 · HEUTE NACHT“ statt der Uhrzeit. Das ist das Label, auf das die siebte Blase rollt.
 - **Mobil wie gebaut:** Szene bis 62svh, darunter die Ruhezone auf Tiefe.
 
-## 5. Intro (etwa 12 s)
+## 5. Intro (etwa 9 s)
 
 | Zeit | Was passiert |
 |---|---|
 | Gate | Die sieben AVIFs (zusammen 172 KB) laden schon jetzt, `img.decode()` vor dem Start. |
 | 0,0–0,4 | „Ja“ schaltet den Ton frei. Danach Schwärze in Tinte mit 7 % CSS-Korn über allem. |
-| 0,8–9,8 | POV-Blinzeln: sieben Fotos bildschirmfüllend, alle 1,4 s ein Lidschlag: towers → yacht → storm → water → terrace → rooftop → fireworks. |
-| je Foto | Die Lider öffnen sich in 0,22 s, das Foto (Vollbild, leichte POV-Vignette) zoomt von 1,04 auf 1,0. 1,2 s nach dem Start schließen sich die Lider in 0,15 s, hinter ihnen wechselt das Foto. Die Lidkanten sind weich gebogen und unscharf. |
-| 9,8–10,15 | `fireworks` wandert in die Mitte und wächst auf 70vmin. Das Amber-Zentrum liegt exakt in der Mitte, weil das Bild beim Kodieren um das Feuerwerk beschnitten wird. Das Label rollt von „07 · 00:00“ auf „HEUTE NACHT“. |
-| 10,1–10,35 | Das Foto wird zur flachen Lichtscheibe. Sie platzt, und der Kreis bleibt als Lichthof (Shader mit Mitte und Radius der Lichtscheibe). |
-| 10,45 | Die Dose steigt aus dem Licht, Bloom auf der Oberkante, tiefer Bass-Schlag. |
-| 11,25–12,0 | Licht-Wipe für „Heute“ (von links) und „Nacht.“ (von rechts), danach Header, Karten, Infotext und CTAs. |
+| 0,8–6,8 | POV-Blinzeln: sieben Fotos bildschirmfüllend, alle 0,9 s ein Lidschlag: towers → yacht → storm → water → terrace → rooftop → fireworks. |
+| je Foto | Die Lider öffnen sich in 0,2 s, das Foto (Vollbild, leichte POV-Vignette) zoomt von 1,04 auf 1,0. 0,72 s nach dem Start schließen sich die Lider in 0,13 s, hinter ihnen wechselt das Foto. Die Lidkanten sind weich gebogen und unscharf. |
+| 6,8–7,15 | `fireworks` wandert in die Mitte und wächst auf 70vmin. Das Amber-Zentrum liegt exakt in der Mitte, weil das Bild beim Kodieren um das Feuerwerk beschnitten wird. Das Label rollt von „07 · 00:00“ auf „HEUTE NACHT“. |
+| 7,1–7,35 | Das Foto wird zur flachen Lichtscheibe. Sie platzt, und der Kreis bleibt als Lichthof (Shader mit Mitte und Radius der Lichtscheibe). |
+| 7,45 | Die Dose steigt aus dem Licht, Bloom auf der Oberkante, tiefer Bass-Schlag. |
+| 8,25–9,0 | Licht-Wipe für „Heute“ (von links) und „Nacht.“ (von rechts), danach Header, Karten, Infotext und CTAs. |
 
 ## 6. Eigene Idee: „Was bleibt, ist das Licht“
 
 - **Was beim Blinzeln bleibt:** Schließen sich die Lider, verschwindet das Foto, aber **sein Amber-Licht bleibt als Nachbild** stehen, ein 4px-Lichtpunkt genau dort, wo das Licht im Foto saß (gemessen: towers 64/52 %, yacht 68/67 %, storm 86/71 % usw.). So wie man nach dem Blick in eine Lampe das Licht noch sieht.
-- **Wie sich die Lichter sammeln:** Nach sechs Lidschlägen hängen sechs warme Nachbilder im Dunkeln, eine Spur durch die Nacht. Bei 9,8 s zieht das Feuerwerk in die Mitte, und die sechs Punkte werden mitgezogen. Sie werden zu den ersten Partylichtern um die Dose.
+- **Wie sich die Lichter sammeln:** Nach sechs Lidschlägen hängen sechs warme Nachbilder im Dunkeln, eine Spur durch die Nacht. Bei 6,8 s zieht das Feuerwerk in die Mitte, und die sechs Punkte werden mitgezogen. Sie werden zu den ersten Partylichtern um die Dose.
 - **Warum:** Der rote Faden aus dem Brief wird damit sichtbar, statt nur behauptet. Jede Erinnerung hinterlässt ihr Licht, und alle Lichter landen bei der Dose.
 - **Aufwand:** Die Partylichter-Übergabe aus der letzten Blase gibt es schon. Neu sind nur die gemessenen Amber-Koordinaten je Blase und sechs zusätzliche Startpunkte.
 
 ## 7. Motion-Haltung
 
-- **Blinzeln:** Das Intro ist eine Ich-Perspektive, die durch die Nacht blinzelt (Lider auf 0,22 s, zu 0,15 s, alle 1,4 s). Der Ruhezustand ist ruhig wie die Nacht danach.
+- **Blinzeln:** Das Intro ist eine Ich-Perspektive, die durch die Nacht blinzelt (Lider auf 0,2 s, zu 0,13 s, alle 0,9 s). Der Ruhezustand ist ruhig wie die Nacht danach.
 - **Kurven:** outExpo und inOutQuart aus `motion.ts`, kein Bounce.
 - **Drei Signatur-Effekte:** POV-Blinzeln mit Amber-Nachbildern, Licht-Wipe, ausweichende Welt.
 - **Reduced motion:** kein Intro, der Hero steht sofort.

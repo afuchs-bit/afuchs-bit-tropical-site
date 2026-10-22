@@ -14,17 +14,17 @@ export const T = {
   /** Black with grain is fully there. */
   grain: 0.4,
   /** POV blink per memory: the lids open in this long (outQuart) … */
-  eyeOpen: 0.22,
+  eyeOpen: 0.2,
   /** … stay open until this long after the memory's start … */
-  eyeHold: 1.2,
+  eyeHold: 0.72,
   /** … and close in this long; the next memory opens behind them. */
-  eyeClose: 0.15,
+  eyeClose: 0.13,
   /** The last memory (fireworks) drifts to the halo center and grows to the halo size. */
-  finalToCenter: [9.8, 10.15],
+  finalToCenter: [6.8, 7.15],
   /** Its photo turns into a flat light disc. */
-  finalDisc: [10.1, 10.35],
+  finalDisc: [7.1, 7.35],
   /** Light flash of the disc starts; it pops at pop + rimFlash. */
-  pop: 10.35,
+  pop: 7.35,
   /** Length of the rim flash (80 ms). Droplets and amber points become party lights at pop + rimFlash. */
   rimFlash: 0.08,
   /** The DOM light may hand over to the WebGL halo from pop + handoffAfter … */
@@ -32,25 +32,25 @@ export const T = {
   /** … in a cross-fade of this length (or to the CSS fallback at posterDeadline). */
   handoffFade: 0.35,
   /** Light cone from above: 0 → 1 in 400 ms, then settles at 35 %. */
-  lightCone: [10.35, 10.75],
+  lightCone: [7.35, 7.75],
   /** Background runs from Tinte into the flavor gradient. */
-  backdrop: [10.35, 10.85],
+  backdrop: [7.35, 7.85],
   /** WebGL render loop starts (frameloop "never" before); ready before the pop. */
-  sceneStart: 9.8,
-  /** Can rises out of the light; rim bloom peaks at 10.65. */
-  can: [10.45, 11.35],
-  rimPeak: 10.65,
-  bass: 10.45,
+  sceneStart: 6.8,
+  /** Can rises out of the light; rim bloom peaks at 7.65. */
+  can: [7.45, 8.35],
+  rimPeak: 7.65,
+  bass: 7.45,
   /** Floating elements fly from the light to their rest positions. */
-  elements: [10.5, 11.5],
+  elements: [7.5, 8.5],
   /** If the scene is not ready by then, the CSS halo holds until the can is there. */
-  posterDeadline: 11.05,
-  headline: [11.25, 11.3],
-  header: 11.4,
-  copy: 11.45,
-  ctas: 11.55,
-  legal: 11.65,
-  rest: 12.0,
+  posterDeadline: 8.05,
+  headline: [8.25, 8.3],
+  header: 8.4,
+  copy: 8.45,
+  ctas: 8.55,
+  legal: 8.65,
+  rest: 9.0,
 } as const;
 
 /** Return visit (intro already seen): light on, can out of the light, wipe. */
@@ -79,7 +79,7 @@ export type BubbleSpec = {
 };
 
 /** Seconds between two memories (one blink each). */
-export const BUBBLE_STEP = 1.4;
+export const BUBBLE_STEP = 0.9;
 export const FIRST_BUBBLE = 0.8;
 
 /**

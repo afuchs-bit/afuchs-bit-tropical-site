@@ -1,58 +1,81 @@
 /**
- * The six memories. Used twice: in the intro bubbles (hero) and in the
- * "Der Abend" section. Keep images free of anyone drinking while steering
- * a vehicle (Werberat code).
+ * The seven moments of one summer night in a nameless city, in dramaturgy
+ * order: Stadt → Bewegung → Spannung → Weite → Atempause → Höhepunkt → Knall.
+ * Used twice: in the intro bubbles (hero) and in the "Der Abend" section.
+ *
+ * Rules (Werberat code): nobody drinks while steering a vehicle, no money,
+ * watches, jewellery, cars or jets, no status or success in the copy.
+ * yacht and water never follow each other directly.
  */
+export type OccasionSlug =
+  | "towers"
+  | "yacht"
+  | "storm"
+  | "water"
+  | "terrace"
+  | "rooftop"
+  | "fireworks";
+
 export type Occasion = {
-  slug: string;
-  /** Mono label shown on the bubble, e.g. "SAMSTAG, 01:40". */
-  stamp: string;
+  slug: OccasionSlug;
+  /** Mono label on the bubble: one night running towards midnight, no weekdays. */
+  label: string;
   title: string;
   line: string;
-  image: string; // path under /public/intro/
+  /** 1200 px JPG (fallback and OG); the intro loads /intro/<slug>.avif. */
+  image: string;
+  /** Short loop for later, e.g. "/intro/rooftop.mp4". */
+  video?: string;
 };
 
 export const occasions: Occasion[] = [
   {
-    slug: "party",
-    stamp: "SAMSTAG, 01:40",
-    title: "Die Party",
+    slug: "towers",
+    label: "01 · 22:14",
+    title: "Zwischen den Türmen",
     line: "[Ein Satz über den Moment, nicht über das Getränk]",
-    image: "/intro/party.jpg",
-  },
-  {
-    slug: "jetski",
-    stamp: "SONNTAG, 14:10",
-    title: "Jetski-Tag",
-    line: "[Ein Satz]",
-    image: "/intro/jetski.jpg",
+    image: "/intro/towers.jpg",
   },
   {
     slug: "yacht",
-    stamp: "FREITAG, 20:55",
-    title: "Yacht bei Sonnenuntergang",
-    line: "[Ein Satz]",
+    label: "02 · 22:51",
+    title: "Übers Deck",
+    line: "[Ein Satz über den Moment, nicht über das Getränk]",
     image: "/intro/yacht.jpg",
   },
   {
-    slug: "lobby",
-    stamp: "DONNERSTAG, 23:30",
-    title: "Die Hotellobby",
-    line: "[Ein Satz]",
-    image: "/intro/lobby.jpg",
+    slug: "storm",
+    label: "03 · 23:08",
+    title: "Gewitter über der Stadt",
+    line: "[Ein Satz über den Moment, nicht über das Getränk]",
+    image: "/intro/storm.jpg",
   },
   {
-    slug: "garten",
-    stamp: "SAMSTAG, 17:20",
-    title: "Garten mit Freunden",
-    line: "[Ein Satz]",
-    image: "/intro/garten.jpg",
+    slug: "water",
+    label: "04 · 23:26",
+    title: "Die Stadt im Wasser",
+    line: "[Ein Satz über den Moment, nicht über das Getränk]",
+    image: "/intro/water.jpg",
   },
   {
-    slug: "club",
-    stamp: "SAMSTAG, 00:05",
-    title: "Auf dem Weg zum Club",
-    line: "[Ein Satz]",
-    image: "/intro/club.jpg",
+    slug: "terrace",
+    label: "05 · 23:47",
+    title: "Die leere Terrasse",
+    line: "[Ein Satz über den Moment, nicht über das Getränk]",
+    image: "/intro/terrace.jpg",
+  },
+  {
+    slug: "rooftop",
+    label: "06 · 23:58",
+    title: "Auf dem Dach",
+    line: "[Ein Satz über den Moment, nicht über das Getränk]",
+    image: "/intro/rooftop.jpg",
+  },
+  {
+    slug: "fireworks",
+    label: "07 · 00:00",
+    title: "Mitternacht",
+    line: "[Ein Satz über den Moment, nicht über das Getränk]",
+    image: "/intro/fireworks.jpg",
   },
 ];

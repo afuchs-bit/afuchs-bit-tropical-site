@@ -1,46 +1,73 @@
 /*
- * Design tokens. Naming follows the gallery scheme Papier · Tinte · Signal · Tiefe.
- * Values are deliberately neutral placeholders: the real palette and type
- * pairing come out of the Design-Direction round (docs/hero-brief.md).
- * Replace this file with tokens/tailwind/theme.css from the gallery when ready.
+ * Project palette "stadtnacht" (docs/design-direction.md v2) on top of the
+ * gallery theme (src/design/tokens/tailwind/theme.css). Measured on the seven
+ * intro photos: Tinte = the dark pixels at the bubble rims, Signal = their
+ * single mango-amber light (hue 31°). Signal is the only accent and the same
+ * for both flavors; the flavor switch changes Tiefe and the halo. Flavor
+ * values are written onto <html> by layout.tsx (SSR) and FlavorProvider.
+ *
+ * Contrast (WCAG 2.1, palettes.md script): Tinte/Papier 16.8 ·
+ * Papier/Tiefe 15.1 · Tinte auf Signal 10.3 · Signal/Tiefe 9.2 ·
+ * Signal-Text/Papier 4.61 · Papier on the halo core (display only) 4.3.
  */
+[data-palette="stadtnacht"] {
+  --paper: #eeebe5;
+  --ink: #05090c;
+  --signal: #ffa647;
+  --signal-text: #a35400;
+  --deep: #0f181d;
+
+  /* Light halo behind the can: amber core that tips into cold graphite. */
+  --halo-core: #a35c1c;
+  --halo-mid: #4a2c14;
+  --halo-deep: #0f181d;
+  --halo-edge: #05090c;
+}
+
+/* The hero is a night scene: text is Papier, accents read on dark. */
+[data-tone="dark"] :focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--ink);
+}
+
+@theme inline {
+  --color-halo-core: var(--halo-core);
+  --color-halo-mid: var(--halo-mid);
+  --color-halo-deep: var(--halo-deep);
+  --color-halo-edge: var(--halo-edge);
+  --color-paper-72: color-mix(in oklab, var(--paper) 72%, transparent);
+  --color-paper-56: color-mix(in oklab, var(--paper) 56%, transparent);
+  --color-paper-40: color-mix(in oklab, var(--paper) 40%, transparent);
+  --color-paper-16: color-mix(in oklab, var(--paper) 16%, transparent);
+
+  /* Compat aliases for the parked sections and legal pages (old token names). */
+  --color-ink-2: var(--color-ink-72);
+  --color-depth: var(--deep);
+  --color-paper-2: color-mix(in oklab, var(--paper) 92%, var(--ink));
+  --font-body: var(--font-text);
+}
+
 @theme {
-  /* Surfaces: this brand lives at night, so Papier is dark and Tiefe is darker. */
-  --color-paper: #0e0d0c;
-  --color-paper-2: #161412;
-  --color-ink: #f4efe6;
-  --color-ink-2: #b9b2a6;
-  --color-signal: #f2c14e;
-  --color-depth: #050505;
+  /* Hero display size: two words around the can (Prinzip 29). ×1.06 for
+     Instrument Serif, which reads optically smaller than its em box. */
+  --text-hero: clamp(4.75rem, 2.55rem + 9.5vw, 13.25rem);
+  --text-hero--line-height: 0.86;
+  --text-hero--letter-spacing: -0.02em;
 
-  /* Typography: set by next/font in app/layout.tsx; placeholders fall back to system. */
-  --font-display: var(--font-display, ui-serif, Georgia, serif);
-  --font-body: var(--font-body, ui-sans-serif, system-ui, sans-serif);
-  --font-mono: var(--font-mono, ui-monospace, "SF Mono", Menlo, monospace);
-
-  /* Type scale (fluid). */
+  /* Compat aliases (old scale). */
   --text-display: clamp(3rem, 8vw, 8rem);
   --text-display--line-height: 0.95;
   --text-display--letter-spacing: -0.02em;
   --text-h2: clamp(2rem, 4.5vw, 4rem);
   --text-h2--line-height: 1.02;
-  --text-h2--letter-spacing: -0.015em;
   --text-lead: clamp(1.125rem, 1.6vw, 1.375rem);
   --text-lead--line-height: 1.45;
-  --text-mono: 0.6875rem;
-  --text-mono--letter-spacing: 0.14em;
-
-  /* Rhythm. */
-  --spacing-section: clamp(6rem, 12vw, 11rem);
-  --spacing-gutter: clamp(1rem, 4vw, 3rem);
+  --text-mono: 0.75rem;
+  --text-mono--letter-spacing: 0.08em;
   --container-content: 72rem;
   --container-prose: 40rem;
-
-  /* Motion. */
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
   --duration-base: 600ms;
   --duration-slow: 1200ms;
-
   --radius-pill: 999px;
 }

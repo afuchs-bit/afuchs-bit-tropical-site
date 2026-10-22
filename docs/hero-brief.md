@@ -1,73 +1,90 @@
 # Hero-Brief (Intro-Sequenz)
 
-Dieser Brief ist der Prompt für die Hero-Runde in Claude Code. Zwei Runden: erst Design-Direction freigeben, dann bauen. Platzhalter in eckigen Klammern ersetzen.
+Stand 22.10.2026. Dieser Brief ersetzt den ersten Stand („warme Golden-Hour-Erinnerungen“, sechs Blasen von Party bis Club). Die Bildwelt ist jetzt eine Großstadt-Sommernacht. Zwei Runden: erst die Design-Direction freigeben (`docs/design-direction.md`), dann bauen.
 
-## Vorbedingungen
+## Bildwelt
 
-- Assets in `/public/intro/` (`party.jpg`, `jetski.jpg`, `yacht.jpg`, `lobby.jpg`, `garten.jpg`, `club.jpg`) und `/public/can/label.png`. Gleiches Licht und gleicher Look (Nacht, warmes Licht, leichte Körnung).
-- Design-Tokens aus der Galerie nach `src/styles/theme.css` übernehmen (Platzhalter liegt dort).
-- Nur Bausteine aus `tokens/licenses.md` der Galerie.
+Eine Sommernacht in einer namenlosen Großstadt, mit dem Handy mitgefilmt:
 
-## Prompt
+- **Licht:** fast schwarz, kühles Graphit und Stahlblau, harte einzelne Lichtquellen.
+- **Kamera:** Handkamera-Unschärfe, Ich-Perspektive.
+- **Amber:** In jedem Bild gibt es genau ein Licht in Mango-Amber (Farbton 24–35°, gemessen im Mittel 31°). Dieses Amber ist der rote Faden, der am Ende zur Dose führt.
+- **Tempo:** wie in Lifestyle-Reels, harte Schnitte unter einer Sekunde, Erinnerungsfetzen statt Diashow.
+- **Bewusst nicht im Bild:** Geld, Uhren, Schmuck, Autos, Jets. Der Werberat verbietet, Alkohol mit sozialem Erfolg zu verknüpfen. Das gilt auch für die Copy.
 
-```text
-/design-taste
+## Die sieben Bilder
 
-Ich baue eine Landingpage für ein neues alkoholisches Party-Getränk: [MARKENNAME], [SORTE/GESCHMACK], Dose 330 ml.
-Zielgruppe: 18–30, Nachtleben, Sommer, Freunde. Stimmung: Nacht, warmes Licht, Luxus mit Leichtigkeit, nicht protzig.
+Originale liegen in `assets-src/intro/` (nicht ausgeliefert). `npm run assets:intro` (`scripts/optimize-intro.mjs`) erzeugt daraus `public/intro/<slug>.avif` (640 px, `fireworks` 1300 px) und `<slug>.jpg` (1200 px, Fallback und OG).
 
-Das Repo steht (Next.js App Router, TS strict, Tailwind v4, Framer Motion, R3F). Struktur und Sections in docs/site-structure.md.
-Du baust jetzt NUR src/components/sections/Hero.tsx und src/components/age-gate/AgeGate.tsx aus.
+| # | slug | Motiv | Label | Amber-Licht im Bild |
+|---|---|---|---|---|
+| 01 | towers | Blick nach oben zwischen zwei Hochhäusern, ein Fenster in Amber | 01 · 22:14 | x 58 % / y 52 % |
+| 02 | yacht | Frau läuft übers Yachtdeck weg, Rückenansicht | 02 · 22:51 | x 68 % / y 67 % |
+| 03 | storm | Blitz über der Skyline, Silhouette am Fenster | 03 · 23:08 | x 86 % / y 71 % |
+| 04 | water | Skyline spiegelt sich im schwarzen Wasser, vom Boot aus | 04 · 23:26 | x 80 % / y 73 % |
+| 05 | terrace | Leere Hotelterrasse, Jacke über dem Stuhl | 05 · 23:47 | x 52 % / y 63 % |
+| 06 | rooftop | Frau tanzt auf dem Rooftop, Arme hoch, Gegenlicht | 06 · 23:58 | x 48 % / y 48 % |
+| 07 | fireworks | Feuerwerk zwischen zwei Türmen, Amber-Gold | 07 · 00:00 | Bildmitte (Zuschnitt um das Feuerwerk) |
 
-Zuerst NUR die Design-Direction nach Workflow A (noch kein Code):
-Palette nach Papier · Tinte · Signal · Tiefe, Schriftpaarung (nur OFL), Hero-Konzept, Motion-Haltung, welche Prinzipien du nutzt und welche eigene Idee dazukommt.
-Leitreferenz für den Hero: 010 Pure Zero (Licht, schwebende Elemente, die dem Cursor ausweichen, Dose dreht sich mit der Maus, Sortenwechsel). Ergänzend: 006 (Partikel), 003 (Text-Reveal), 008 (Licht als Akzentfarbe).
-Übernimm von 010 ausdrücklich NICHT: verschwindenden Header, blassen Infotext, Objekte über Fließtext.
+- **Reihenfolge = Dramaturgie:** Stadt → Bewegung → Spannung → Weite → Atempause → Höhepunkt → Knall. `yacht` und `water` folgen nie direkt aufeinander.
+- **Labels:** eine einzige Nacht, die auf Mitternacht zuläuft, ohne Wochentage. Label 07 rollt nach dem Platzen auf „HEUTE NACHT“.
+- **Amber-Positionen:** gemessen am Schwerpunkt der Amber-Pixel. Grundlage für die eigene Idee der Direction.
 
-Intro-Sequenz (das Herzstück), als Drehbuch:
-0,0 s  Schwarzer Bildschirm. Mittig klein die Altersabfrage: „Bist du mindestens 18?“ Ja / Nein. Erst nach „Ja“ startet alles.
-+0,4 s Stille Schwärze, ein feines Korn ist zu sehen.
-+0,8 s Sechs Erinnerungsblasen erscheinen nacheinander an unterschiedlichen Stellen, je ca. 0,6–0,8 s sichtbar, leicht überlappend:
-       Party · Jetski-Tag · Yacht bei Sonnenuntergang · große Hotellobby · Garten mit Freunden · auf dem Weg zum Club.
-       Jede Blase ist eine runde Maske mit Foto, wirkt wie eine aufsteigende Kohlensäure-Blase: wächst aus einem Punkt,
-       leichter Glanzrand oben, steigt ein Stück nach oben, zerplatzt weich. Dazu ein winziges Mono-Label (z. B. „SAMSTAG, 01:40“).
-       Schnell und prägnant, wie Erinnerungsfetzen, nicht wie eine Diashow.
-+5,0 s Die letzte Blase wächst in die Bildmitte, platzt, Lichtschein von oben.
-+5,6 s Die Dose erscheint aus dem Licht (Bloom auf der Oberkante), Zutaten/Eiswürfel/Limettenscheiben verteilen sich und schweben.
-+6,4 s Headline per Signatur-Reveal, danach Header, Infotext, CTA. Optional ein tiefer Bass-Schlag beim Erscheinen der Dose.
-Gesamtdauer Intro max. 7 s. „Intro überspringen“ immer sichtbar. Intro nur beim ersten Besuch, danach direkt der Hero.
-Bei „Bewegung reduzieren“: kein Intro, direkt der fertige Hero.
+## Intro-Drehbuch (max. 7 s)
 
-Hero im Ruhezustand:
-- Dose groß in der Mitte im Lichthof, dreht sich leicht mit der Maus.
-- Schwebende Elemente aus der Welt des Getränks (Eis, Limette, Minze, Lichtpunkte wie Partylichter) weichen dem Cursor aus (Prinzip 31).
-- Sortenwechsel oben rechts, falls mehrere Sorten: Dose, Hintergrundfarbe und Elemente wechseln gemeinsam (Prinzip 32). Sorten kommen aus src/content/flavors.ts.
-- Header nach Prinzip 33, bleibt immer sichtbar (src/components/layout/Header.tsx existiert).
-- Infotext gut lesbar: volle Tinte, eigene ruhige Zone, nichts fliegt darüber.
-- Zwei CTAs aus src/config/site.ts: primär „Zum ersten Drop“ (#drop), sekundär „Für Bars & Handel“ (#handel).
+| Zeit | Was passiert |
+|---|---|
+| 0,0 s | Age Gate. „Ja“ startet das Intro; der Klick schaltet auch Audio frei. |
+| +0,4 s | Schwärze mit feinem Korn (CSS-Ebene, etwa 7 %, über allem). |
+| +0,8–5,0 s | Sieben Blasen im Abstand von etwa 0,6 s, je etwa 0,7 s sichtbar, leicht überlappend. Siehe „Blase“ unten. |
+| +5,0 s | `fireworks` wandert in die Mitte und wächst auf 70vmin; das Amber-Zentrum liegt exakt in der Bildmitte. Es wird zur flachen Lichtscheibe, dann zum Lichthof: ein Shader, dessen Uniforms Mittelpunkt und Radius der Blase übernehmen. |
+| +5,6 s | Die Dose erscheint aus dem Licht, Bloom auf der Oberkante. Optional ein tiefer Bass-Schlag. |
+| +6,4 s | Headline-Reveal, danach Header, Infotext, CTAs. |
 
-Technik: Next.js App Router, TypeScript, Tailwind v4 mit src/styles/theme.css, Framer Motion,
-React Three Fiber + drei + @react-three/postprocessing (Bloom, Noise, Vignette). Dose prozedural als Zylinder mit Etikett-Textur.
-R3F-Canvas als Client Component mit next/dynamic (ssr: false) laden, Hero-Shell bleibt Server Component.
-Nur Bausteine aus tokens/licenses.md.
+**Blase**
+- **Form:** runde Maske (Inkreis). Das Foto skaliert darin von 1,15 auf 1,0.
+- **Bewegung:** wächst aus einem Punkt, leichte Glanzsichel oben links, steigt ein Stück und platzt.
+- **Größe:** 16–24vmin, auf Mobil ×1,6.
+- **Verteilung:** über die ganze Fläche, nie zwei direkt hintereinander auf derselben Bildhälfte.
+- **Tempo:** härter als im alten Brief. Erscheinen in etwa 120 ms mit ease-out-expo, Platzen ebenso schnell. Es soll wie ein Schnitt wirken, nicht wie eine Überblendung.
 
-Assets liegen in /public/intro/ (party.jpg, jetski.jpg, yacht.jpg, lobby.jpg, garten.jpg, club.jpg) und /public/can/label.png.
+**Immer:**
+- „Intro überspringen“ ist sichtbar.
+- Das Intro läuft nur bei `firstPass`.
+- Bei `prefers-reduced-motion` kein Intro; der Hero steht sofort.
 
-Rechtliches: Kein Bezug von Alkohol zum Führen von Fahrzeugen (Jetski/Yacht nur als Stimmung, ohne Getränk am Steuer).
-Kein Alkoholgehalt in der Headline, keine Stärke als Argument. Footer-Hinweis „Verantwortungsvoll genießen“ und 18+ sind schon da.
+**Preload:** Die sieben AVIFs laden schon während des Age Gates. Vor dem Start wird `img.decode()` abgewartet, damit keine Blase leer aufploppt.
 
-Nach dem Bauen: Selbstkontrolle nach Workflow A Schritt 6, Desktop und Mobil, Ladezeit prüfen (Lighthouse Mobile Performance ≥ 85, Intro-Assets ≤ 1,5 MB gesamt).
-```
+## Ruhezustand
 
-## Vorgehen
+- Dose groß im Lichthof, dreht sich leicht mit der Maus.
+- Schwebende Elemente weichen dem Cursor aus.
+- Sortenwechsel aus `src/content/flavors.ts`: Dose, Lichthof und Elemente wechseln gemeinsam.
+- Header immer sichtbar.
+- Copy-Zone in voller Tinte, nichts fliegt darüber.
+- CTAs: „Zum ersten Drop“ und „Für Bars & Handel“.
 
-1. Design-Direction lesen. Passen Palette und Schrift nicht, jetzt korrigieren, bevor Code entsteht.
-2. Bauen lassen.
-3. Intro einzeln feinschleifen: „Blasen 20 % schneller, Jetski-Blase größer, Label weg.“
-4. Wenn gut: `theme.css` und Hero als Referenz in die Galerie.
+## Fallbacks (Assets noch nicht da)
 
-## Hinweise
+- **Etikett:** prozedurale CanvasTexture aus Sortenfarbe und `brand.name`. Ein späteres Etikett unter `/public/can/` greift ohne Codeänderung.
+- **Zutaten:** einfache Geometrie (Eiswürfel, Lichtpunkte, prozedurale Früchte).
 
-- Der Klick auf „Ja“ ist die User-Geste, die Audio freischaltet. Ohne Geste blockieren Browser Ton.
-- Jetski und Yacht nur als Stimmung. Niemand trinkt am Steuer. Werberat-Kodex, vor Launch prüfen lassen.
-- Intro-Bilder als `.webp` oder `.avif` liefern, 1200 px Kante reicht für die Blasen.
+## Technik
+
+- Hero-Shell bleibt Server Component.
+- Intro (DOM/CSS mit Framer Motion und nativen Animationen, Blasen ohne WebGL) und Szene (R3F über `next/dynamic({ ssr: false })`) sind Client Components.
+- Der Canvas lädt parallel zum Intro und ist bei +5,0 s bereit. Ist er das nicht, hält der Lichthof als CSS-Fallback, bis die Dose da ist. Kein Loch.
+- Kein Layout Shift. LCP ist das Age Gate bzw. die Headline, kein Bild.
+
+## Rechtliches
+
+- Kein Alkoholgehalt in der Headline, keine Stärke oder Menge als Argument.
+- Kein Status- oder Erfolgsbezug in der Copy.
+- Kein Fahrzeugbezug: Yacht und Boot nur als Stimmung, niemand am Steuer, kein Getränk am Fahrzeug.
+- Vor dem Launch vom Werberechtler prüfen lassen.
+
+## Abnahme
+
+- `npm run typecheck`, `npm run lint`, `npm run build` fehlerfrei.
+- Screenshots bei 1440 × 900 und 390 × 844, jeweils 1,5 s, 3,5 s, 5,3 s und 7,5 s nach „Ja“, unter `docs/screens/`.
+- Lighthouse Mobile Performance ≥ 85, CLS 0, Intro-Assets ≤ 500 KB.
